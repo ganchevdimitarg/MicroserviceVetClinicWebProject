@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/login-user-header}"/>
+<main>
+    <span hidden="hidden" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+    <div class="container table-bordered">
+        <div class="row">
+            <form th:method="post" th:action="@{/doctor/api/schedule}" class="col-md-12 regis ter-form" name="schedule">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Date Review: <input type="text" name="dateReview" id="dateReview"
+                                                placeholder="16.03.2019 - 16:30"/>
+                        </div>
+                        <div class="col-md-3">
+                            Doctor: <input type="text" name="doctor" id="doctor" placeholder="Ivan Vazov"/>
+                        </div>
+                        <div class="col-md-3">
+                            Animal: <input type="text" name="animal" id="animalName" placeholder="Max"/>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="submit" name="signup" id="signup" class="form-submit"
+                                   value="Add Schedule"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <p>Date</p>
+            </div>
+            <div class="col-md-2">
+                <p>Doctor</p>
+            </div>
+            <div class="col-md-2">
+                <p>Animal</p>
+            </div>
+            <div class="col-md-2">
+                <p>Treatment</p>
+            </div>
+            <div class="col-md-2">
+                <p>Completed</p>
+            </div>
+        </div>
+    </div>
+    <div id="camp" class="container"></div>
+
+</main>
+<th:block th:include="~{fragments/footer}"/>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="/js/schedule-table.js"></script>
+</body>
+</html>

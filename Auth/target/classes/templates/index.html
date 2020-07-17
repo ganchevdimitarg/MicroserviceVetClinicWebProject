@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+<main>
+    <div id="hide" class="container">
+        <div class="row">
+            <a th:href="@{/register}" class="col-md-6 col-lg-4 mb-4 center-sign">
+                <div class="service h-100">
+                          <span class="wrap-icon">
+                            <span class="icon-font">
+                                <img src="https://www.boredart.com/wp-content/uploads/2017/03/simple-dog-drawing-to-Follow-and-Practice0001.jpg"
+                                     alt="dog"></span>
+                          </span>
+                    <h2>Sign Up</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                </div>
+            </a>
+            <a th:href="@{/sign-in}" class="col-md-6 col-lg-4 mb-4 center-sign">
+                <div class="service h-100 btn-hiding">
+                        <span class="wrap-icon">
+                            <span class="icon-book">
+                                <img src="https://www.drawingtutorials101.com/drawing-tutorials/Cartoon-Movies/Bolt/bolt/how-to-draw-Dog-from-Bolt-step-0.png"
+                                     alt="dog"></span>
+                         </span>
+                    <h2>Sign In</h2>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

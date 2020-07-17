@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="VetClinicWebProject:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>VetClinicWebProject</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="vet-clinic-web-project-1.0.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="VetClinicWebProject:war exploded" />
+    </root>
+  </artifact>
+</component>

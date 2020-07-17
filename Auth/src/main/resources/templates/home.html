@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/login-user-header}"/>
+<main>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="container">
+            <div id="campd" class="container"></div>
+        </div>
+    </div>
+    <div sec:authorize="hasRole('USER')">
+        <div class="text-center mb-3">
+        </div>
+        <div id="camp" class="container"></div>
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <button class="col-md-3 btn btn-primary" id="hiding-update-info">Update Info</button>
+                <form id="hide-update-input" th:method="post" th:action="@{/user/api/update-info}" class="register-form"
+                      name="update-user"
+                      target="_self">
+                    <div class="form-group">
+                        <label for="name"><i class="zmdi zmdi-email"></i></label>
+                        <input type="name" name="name" id="name" placeholder="Ivan"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><i class="zmdi zmdi-email"></i></label>
+                        <input type="email" name="email" id="email" placeholder="Your Email - lorem@abv.bg"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="address"><i
+                                class="zmdi zmdi-attachment material-icons-name"></i></label>
+                        <input type="text" name="address" id="address" placeholder="Your Address - Ivan Vazov 3"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber"><i class="zmdi zmdi-phone material-icons-name"></i></label>
+                        <input type="text" name="phoneNumber" id="phoneNumber"
+                               placeholder="Your Phone Number - 0888888888"/>
+                    </div>
+                    <div class="form-group form-button">
+                        <input type="submit" name="signup" id="update" class="form-submit"
+                               value="Update"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script sec:authorize="hasRole('ADMIN')" src="/js/doctor-home.js"></script>
+    <script sec:authorize="hasRole('USER')" src="/js/user-home.js"></script>
+</body>
+</html>

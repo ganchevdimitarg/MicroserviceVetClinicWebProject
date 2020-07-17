@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/login-user-header}"/>
+<main>
+    <div class="text-center mb-3">
+    </div>
+    <div class="container table-bordered">
+        <div class="row">
+            <div class="col-md-2">
+                <p>Breed</p>
+            </div>
+            <div class="col-md-2">
+                <p>Name</p>
+            </div>
+            <div class="col-md-2">
+                <p>Age</p>
+            </div>
+            <div class="col-md-2">
+                <p>Disease</p>
+            </div>
+            <div class="col-md-2">
+                <p>Medicines</p>
+            </div>
+        </div>
+        <div id="camp" class="container"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <a class="col-md-3 btn btn-info" th:href="@{/user/add-animal}">Add Pet</a>
+        </div>
+    </div>
+</main>
+
+<th:block th:include="~{fragments/footer}"/>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="/js/animal.js"></script>
+</body>
+</html>

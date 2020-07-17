@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/login-user-header}"/>
+<main>
+    <div class="text-center mb-3">
+    </div>
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Add pet</h2>
+                    <form th:method="post" th:action="@{/user/api/add-user-animal}" class="regis ter-form" name="add-pet">
+                        <div class="form-group">
+                            <label for="breed"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="breed" id="breed" placeholder="Your pet's breed - dog"/>
+                        </div>
+                        <div class=" form-group">
+                            <label for="name"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="text" name="name" id="name" placeholder="Your pet's name - Max"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="age"><i class="zmdi zmdi-lock-outline"></i></label>
+                            <input type="number" name="age" id="age" placeholder="Your pet's age - 1"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="disease"><i class="zmdi zmdi-email"></i></label>
+                            <input type="text" name="disease" id="disease" placeholder="Pet's disease"/>
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="add-pet" id="add-pet" class="form-submit"
+                                   value="Add Pet"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="signup-image">
+                    <figure><img th:src="@{https://sdvconline.com/library/img002.jpg}" alt="sing up image"></figure>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

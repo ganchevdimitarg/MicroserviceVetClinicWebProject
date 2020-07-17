@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/login-user-header}"/>
+<main>
+    <span hidden="hidden" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+    <div class="text-center mb-3">
+        <h4 class="text-black-50 mt-2">Medicines</h4>
+    </div>
+    </br>
+    <div class="container">
+        <div class="row">
+            <form th:method="post" th:action="@{/doctor/api/add-medicine}" class="col-md-12 regis ter-form" name="medicine">
+                <div class="container">
+                    <div class="row">
+                        Medicine's Name: <input type="text" class="col-md-3" name="name" id="name"
+                               placeholder="Medicine Name - Ambrozia"/>
+                        Medicine's description:  <input type="text" class="col-md-3" name="description" id="description"
+                               placeholder="Medicine Description"/>
+                    </div>
+                    <input type="submit" name="signup" id="signup" class="form-submit"
+                           value="Add Medicine"/>
+                </div>
+            </form>
+        </div>
+        <div id="camp" class="container"></div>
+    </div>
+</main>
+
+<th:block th:include="~{fragments/footer}"/>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="/js/medicine.js"></script>
+</body>
+</html>

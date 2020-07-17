@@ -1,0 +1,58 @@
+<th:block th:fragment>
+    <header sec:authorize="hasRole('ROLE_ADMIN')">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="doctorNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" th:href="@{/home}">Animal Paradise</a>
+                <div class="collapse navbar-collapse" id="navbarResponsiveGuest">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/home}"><span th:text="${#authentication.getPrincipal().getUsername()}"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/home}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/doctor/schedule}">Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/doctor/medicine}">Medicine</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <header sec:authorize="hasRole('USER')">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="guestNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" th:href="@{/home}">Animal Paradise</a>
+                <div class="collapse navbar-collapse" id="navbarResponsiveGuest">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/home}"><span th:text="${#authentication.getPrincipal().getUsername()}"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/home}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/user/add-animal}">Add Pet</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/user/pet}">Pets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/contact}">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+</th:block>
