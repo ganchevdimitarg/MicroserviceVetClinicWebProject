@@ -17,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
@@ -32,7 +31,7 @@ public class GuestApiController {
     public static final String SIGN_UP_PAGE = "auth/sign-up-user";
     public static final String SIGN_IN_PAGE = "/sign-in";
     public static final String USER_HOME_PAGE = "/home";
-    public static final String INDEX_PAGE = "/";
+    public static final String LOGOUT_PAGE = "/logout";
 
     private final ModelMapper modelMapper;
     private final GuestService guestService;
@@ -42,10 +41,10 @@ public class GuestApiController {
         GuestViewApiControllerModel user = modelMapper.map(guestService.getUserHome(principal.getName()), GuestViewApiControllerModel.class);
 
         if (user != null){
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            return ResponseEntity.ok(user);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 
     @ModelAttribute("registerUser")
@@ -54,7 +53,7 @@ public class GuestApiController {
     }
 
     @PostMapping("/sign-up-user")
-    public ResponseEntity<Void> registerUser(@Valid @ModelAttribute("registerUser") GuestApiControllerModel user, BindingResult bindingResult) {
+    public ResponseEntity<GuestServiceModel> registerUser(@Valid @ModelAttribute("registerUser") GuestApiControllerModel user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, SIGN_UP_PAGE).build();
         }
@@ -64,8 +63,13 @@ public class GuestApiController {
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, SIGN_IN_PAGE).build();
     }
 
+    @ModelAttribute("registerUser")
+    public GuestUpdateApiControllerModel updateUser() {
+        return new GuestUpdateApiControllerModel();
+    }
+
     @PostMapping("/update-info")
-    public ResponseEntity<Void> update(@AuthenticationPrincipal Principal principal, GuestUpdateApiControllerModel user) {
+    public ResponseEntity<GuestServiceModel> update(@AuthenticationPrincipal Principal principal, @Valid @ModelAttribute("updateUser") GuestUpdateApiControllerModel user) {
         user.setUsername(principal.getName());
         guestService.update(modelMapper.map(user, GuestServiceModel.class));
 

@@ -1,21 +1,27 @@
-<th:block th:fragment>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+<head>
+<link crossorigin="anonymous"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      rel="stylesheet"/>
+</head>
+<body>
+<div sec:authorize="isAnonymous()">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav" th:fragment="navbar(activeTab)">
             <div class="container">
                 <a class="navbar-brand js-scroll-trigger" th:href="@{/}">Animal Paradise</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
+                        <li class="nav-item" th:classappend="${activeTab == 'home'}? 'active'">
                             <a class="nav-link js-scroll-trigger" th:href="@{/}">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" th:classappend="${activeTab == 'about'}? 'active'">
                             <a class="nav-link js-scroll-trigger" th:href="@{/about}">About</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" th:classappend="${activeTab == 'contact'}? 'active'">
                             <a class="nav-link js-scroll-trigger" th:href="@{/contact}">Contact</a>
                         </li>
                     </ul>
@@ -23,4 +29,73 @@
             </div>
         </nav>
     </header>
-</th:block>
+</div>
+<div sec:authorize="isAuthenticated()">
+    <header sec:authorize="hasRole('ROLE_ADMIN')">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" th:fragment="navbar(activeTab)">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" th:href="@{/home}">Animal Paradise</a>
+                <div class="collapse navbar-collapse navbarResponsiveGuest">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item" th:classappend="${activeTab == 'home'}? 'active'">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/home}"><span
+                                    th:text="${#authentication.getName()}"></span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${activeTab == 'home'}? 'active'">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/home}">Home</a>
+                        </li>
+                        <li class="nav-item" th:classappend="${activeTab == 'schedule'}? 'active'">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/doctor/schedule}">Schedule</a>
+                        </li>
+                        <li class="nav-item" th:classappend="${activeTab == 'medicine'}? 'active'">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/doctor/medicine}">Medicine</a>
+                        </li>
+                        <li class="nav-item">
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="btn btn-link nav-link">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <header sec:authorize="hasRole('ROLE_USER')">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" th:fragment="navbar(activeTab)">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" th:href="@{/home}">Animal Paradise</a>
+                <div class="collapse navbar-collapse navbarResponsiveGuest">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item" th:classappend="${activeTab == 'home'}? 'active'">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/home}"><span
+                                    th:text="${#authentication.getName()}"></span></a>
+                        </li>
+                        <li class="nav-item" th:classappend="${activeTab == 'home'}? 'active'">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/home}">Home</a>
+                        </li>
+                        <li class="nav-item" th:classappend="${activeTab == 'add-animal'}? 'active'">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/user/add-animal}">Add Pet</a>
+                        </li>
+                        <li class="nav-item" th:classappend="${activeTab == 'pet'}? 'active'">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/user/pet}">Pets</a>
+                        </li>
+                        <li class="nav-item" th:classappend="${activeTab == 'contact'}? 'active'">
+                            <a class="nav-link js-scroll-trigger" th:href="@{/contact}">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="btn btn-link nav-link">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+</div>
+</body>
+</html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<th:block th:include="~{fragments/head}"/>
+<head th:replace="fragments/head :: head"></head>
 <body onload="loadMap()">
-<th:block th:include="~{fragments/login-user-header}"/>
+<span th:replace="fragments/header :: header"></span>
 <div class="contact1">
     <div class="container-contact1">
         <div class="container">
@@ -48,7 +48,8 @@
     </div>
 </div>
 
-<th:block th:include="~{fragments/footer}"/>
+<span th:replace="fragments/footer :: footer"></span>
+
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
 <script type="text/javascript">

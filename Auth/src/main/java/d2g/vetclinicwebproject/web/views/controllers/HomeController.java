@@ -11,21 +11,21 @@ public class HomeController {
 
     @GetMapping("/")
     public String getIndex() {
-        return "/index.html";
+        return "/index";
     }
 
     @GetMapping("/home")
     public String home() {
-        return "/home.html";
+        return "/home";
     }
 
     @GetMapping("/about")
     public String getAbout() {
-        return "/about.html";
+        return "/about";
     }
 
     @GetMapping("/contact")
     public String getContact() {
-        return "/contact.html";
+        return "/contact";
     }
 }

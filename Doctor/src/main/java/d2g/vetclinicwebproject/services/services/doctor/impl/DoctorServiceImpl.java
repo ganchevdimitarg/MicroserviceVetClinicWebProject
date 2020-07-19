@@ -23,22 +23,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public DoctorServiceModel findByUsernameAndPassword(String username, String password) {
-        return modelMapper.map(getDoctorByUsernameAndPassword(username, password), DoctorServiceModel.class);
-    }
-
-    @Override
     public DoctorServiceModel findByUsername(String username) {
         return modelMapper.map(doctorRepository.findByUsername(username), DoctorServiceModel.class);
-    }
-
-    @Override
-    public DoctorServiceModel findByName(String name) {
-        return modelMapper.map(doctorRepository.findByUsername(name), DoctorServiceModel.class);
-    }
-
-    private Doctor getDoctorByUsernameAndPassword(String username, String password) {
-        return doctorRepository.findByUsernameAndPassword(username, password)
-                .orElseThrow(() -> new DoctorNotFoundException(INVALID_LOGIN_PARAMS));
     }
 }

@@ -15,15 +15,13 @@ public class DoctorApiController {
     private final ModelMapper modelMapper;
     private final DoctorService doctorService;
 
-    @GetMapping("/{username}/{password}")
-    public ResponseEntity<DoctorApiControllerModel> getUserByUsernameAndPassword(@PathVariable String username, @PathVariable String password) {
-        DoctorApiControllerModel model = modelMapper.map(doctorService.findByUsernameAndPassword(username, password), DoctorApiControllerModel.class);
-
-        return new ResponseEntity<>(model, HttpStatus.OK);
-    }
-
     @GetMapping("/{username}")
     public ResponseEntity<DoctorApiControllerModel> getUserById(@PathVariable String username) {
-        return new ResponseEntity<>(modelMapper.map(doctorService.findByUsername(username), DoctorApiControllerModel.class), HttpStatus.OK);
+        DoctorApiControllerModel model = modelMapper.map(doctorService.findByUsername(username), DoctorApiControllerModel.class);
+
+        if (model.getId() != null){
+            return ResponseEntity.ok(model);
+        }
+        return ResponseEntity.notFound().build();
     }
 }

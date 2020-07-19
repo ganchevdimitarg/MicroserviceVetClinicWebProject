@@ -26,7 +26,7 @@ public class User extends BaseEntity {
     private String username;
     @Column(nullable = false, unique = true)
     @NotEmpty
-    @Pattern(regexp = PASSWORD_VALIDATE)
+//    @Pattern(regexp = PASSWORD_VALIDATE)
     private String password;
     @Column(columnDefinition = "")
     @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)

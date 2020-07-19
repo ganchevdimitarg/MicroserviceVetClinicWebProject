@@ -38,9 +38,9 @@ public class AnimalApiController {
         List<AnimalApiControllerModel> animals = animalService.getUserAnimals(principal.getName());
 
         if (animals.size() != 0){
-            return new ResponseEntity<>(animals, HttpStatus.OK);
+            return ResponseEntity.ok(animals);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @ModelAttribute("addAnimal")
@@ -49,7 +49,7 @@ public class AnimalApiController {
     }
 
     @PostMapping("/add-user-animal")
-    public ResponseEntity<Void> addAnimals(@Valid @ModelAttribute("addAnimal") AddAnimalApiControllerModel animal, BindingResult bindingResult, @AuthenticationPrincipal Principal principal) {
+    public ResponseEntity<AddAnimalServiceModel> addAnimals(@Valid @ModelAttribute("addAnimal") AddAnimalApiControllerModel animal, BindingResult bindingResult, @AuthenticationPrincipal Principal principal) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).header(HttpHeaders.LOCATION, ADD_PET_PAGE).build();
         }
@@ -60,7 +60,7 @@ public class AnimalApiController {
     }
 
     @PostMapping("/delete-user-animal/{animalId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String animalId, AddAnimalApiControllerModel animal) {
+    public ResponseEntity<AddAnimalServiceModel> deleteUser(@PathVariable String animalId, AddAnimalApiControllerModel animal) {
         animalService.deleteUser(animalId, modelMapper.map(animal, AddAnimalServiceModel.class));
 
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, PET_PAGE).build();

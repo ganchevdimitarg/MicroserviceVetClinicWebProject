@@ -19,52 +19,36 @@ public class UserApiController {
     private final ModelMapper modelMapper;
     private final UserService userService;
 
-    @GetMapping("/{username}/{password}")
-    public ResponseEntity<UserApiControllerModel> getUserByUsernameAndPassword(@PathVariable String username, @PathVariable String password) {
-        UserServiceModel user = userService.findByUsernameAndPassword(username, password);
-
-        if (user != null) {
-            return new ResponseEntity<>(modelMapper.map(user, UserApiControllerModel.class), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @GetMapping("/{username}")
     public ResponseEntity<UserApiControllerModel> getUserByUsername(@PathVariable String username) {
         UserApiControllerModel user = modelMapper.map(userService.findByUsername(username), UserApiControllerModel.class);
 
         if (user != null){
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            return ResponseEntity.ok(user);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/register-user")
-    public ResponseEntity<Void> registerUser(@RequestBody UserRegisterApiControllerModel model) {
+    public ResponseEntity<UserServiceModel> registerUser(@RequestBody UserRegisterApiControllerModel model) {
         userService.registerUser(modelMapper.map(model, UserServiceModel.class));
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/update-user-info")
-    public ResponseEntity<Void> updateUserInfo(@RequestBody UserUpdateApiControllerModel model) {
+    public ResponseEntity<UserServiceModel> updateUserInfo(@RequestBody UserUpdateApiControllerModel model) {
         userService.updateUser(modelMapper.map(model, UserServiceModel.class));
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/delete-user")
-    public ResponseEntity<Void> deleteUser(@RequestBody UserUpdateApiControllerModel model) {
-        userService.deleteUser(model.getUsername());
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
     @PostMapping("/delete-user/{username}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String username) {
+    public ResponseEntity<UserServiceModel> deleteUser(@PathVariable String username) {
         userService.deleteUser(username);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.noContent().build();
     }
 }

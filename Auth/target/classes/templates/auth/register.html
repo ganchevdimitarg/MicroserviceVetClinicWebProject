@@ -2,25 +2,37 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="fragments/head :: head"></head>
 <body>
-<form th:method="post" th:action="@{/register}">
-    <label>
-        Username:
-        <input type="text" name="username">
-    </label>
-    <label>
-        Password:
-        <input type="password" name="password">
-    </label>
-    <label>
-        ConfirmPassword:
-        <input type="password" name="confirmPassword">
-    </label>
-    <button type="submit">Register</button>
-</form>
+<span th:replace="fragments/header :: header"></span>
+<main>
+    <form th:method="post" th:action="@{/register}">
+        <div class="register-form">
+            <div class="row justify-content-md-center">
+                <label class="col-md-auto">
+                    Username:
+                    <input type="text" class="register-input" name="username">
+                </label>
+            </div>
+            <div class="row justify-content-md-center">
+                <label class="col-md-auto">
+                    Password:
+                    <input type="password" class="register-input" name="password">
+                </label>
+            </div>
+            <div class="row justify-content-md-center">
+                <label class="col-md-auto">
+                    ConfirmPassword:
+                    <input type="password" class="register-input" name="confirmPassword">
+                </label>
+            </div>
+            <div class="row justify-content-md-center">
+                <button type="submit" class="col-md-auto btn btn-success">Register</button>
+            </div>
+        </div>
+    </form>
+</main>
+<span th:replace="fragments/footer :: footer"></span>
+
 </body>
 </html>

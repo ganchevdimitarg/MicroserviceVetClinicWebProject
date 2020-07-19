@@ -25,6 +25,10 @@ public class DoctorServiceImpl implements DoctorService {
     private final ModelMapper modelMapper;
 
     @HystrixCommand(fallbackMethod = "getFallbackDoctorHomePage",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "30"),
+                    @HystrixProperty(name = "maxQueueSize", value = "-1")
+            },
             threadPoolKey = "doctorHomePage",
             commandProperties = {
                     @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
@@ -33,8 +37,8 @@ public class DoctorServiceImpl implements DoctorService {
                     @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "2000")
             })
     @Override
-    public DoctorServiceModel getDoctorHome(String id) {
-        return restTemplate.exchange(MICROSERVICE_DOCTOR_URL + id,
+    public DoctorServiceModel getDoctorHome(String username) {
+        return restTemplate.exchange(MICROSERVICE_DOCTOR_URL + username,
                 HttpMethod.GET, null, new ParameterizedTypeReference<DoctorServiceModel>() {
                 }).getBody();
     }

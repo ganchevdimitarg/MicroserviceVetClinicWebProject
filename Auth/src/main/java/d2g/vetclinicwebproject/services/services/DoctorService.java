@@ -6,7 +6,7 @@ import d2g.vetclinicwebproject.services.models.*;
 import java.util.List;
 
 public interface DoctorService {
-    DoctorServiceModel getDoctorHome(String id);
+    DoctorServiceModel getDoctorHome(String username);
 
     List<ScheduleServiceModel> getSchedule();
 

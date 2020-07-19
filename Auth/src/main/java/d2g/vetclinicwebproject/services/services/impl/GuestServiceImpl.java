@@ -25,6 +25,10 @@ public class GuestServiceImpl implements GuestService {
     private final RestTemplate restTemplate;
 
     @HystrixCommand(fallbackMethod = "getFallbackUserHomePage",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "30"),
+                    @HystrixProperty(name = "maxQueueSize", value = "-1")
+            },
             threadPoolKey = "userHomePage",
             commandProperties = {
                     @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
@@ -51,7 +55,7 @@ public class GuestServiceImpl implements GuestService {
 
     @Override
     public void deleteUser(String username) {
-        restTemplate.postForObject(MICROSERVICE_USER_URL + "delete-user/" + username,null, GuestServiceModel.class);
+        restTemplate.postForObject(MICROSERVICE_USER_URL + "delete-user/" + username, null, GuestServiceModel.class);
         UserEntity user = getByUsername(username);
         user.getAuthorities().removeAll(user.getAuthorities());
         authorityRepository.deleteAuthorityEntityByUser(user);

@@ -365,7 +365,18 @@ figure {
 }
 
 .register-form {
-    width: 100%;
+    margin: 0 auto;
+    padding-top: 95px;
+    width: 350px;
+    height: 400px;
+    background-color: aliceblue;
+    border: 1px solid #00c6ff;
+    border-radius: 10px;
+}
+
+.register-input {
+    border-radius: 5px;
+    border: 1px solid aqua;
 }
 
 .form-group {
@@ -828,7 +839,7 @@ main {
 
 @font-face {
     font-family: Montserrat-Regular;
-    src: url('/fonts/montserrat/Montserrat-Regular.ttf');
+    src: url("/fonts/montserrat/Montserrat-Regular.ttf");
 }
 
 @font-face {
@@ -1292,3 +1303,6 @@ textarea.input1 + .shadow-input1 {
     width: 500px;
     height: 350px;
 }
+
+
+/*Register form*/

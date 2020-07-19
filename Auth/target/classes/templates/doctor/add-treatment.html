@@ -2,9 +2,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
-<th:block th:include="~{fragments/head}"/>
+<head th:replace="fragments/head :: head"></head>
 <body>
-<th:block th:include="~{fragments/login-user-header}"/>
+<span th:replace="fragments/header :: header"></span>
 <section class="signup">
     <div class="container">
         <div class="signup-content align-content-center">
@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group form-button">
                         <input type="submit" name="treatment" id="treatment" class="form-submit"
-                               value="Add Treatment" />
+                               value="Add Treatment"/>
                     </div>
                     <button><a th:href="@{/doctor/schedule}">Back</a></button>
                 </form>
@@ -29,6 +29,8 @@
         </div>
     </div>
 </section>
-<th:block th:include="~{fragments/footer}"/>
+
+<span th:replace="fragments/footer :: footer"></span>
+
 </body>
 </html>

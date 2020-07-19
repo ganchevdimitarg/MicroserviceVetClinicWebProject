@@ -3,9 +3,9 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
-<th:block th:include="~{fragments/head}"/>
+<head th:replace="fragments/head :: head"></head>
 <body>
-<th:block th:include="~{fragments/login-user-header}"/>
+<span th:replace="fragments/header :: header"></span>
 <main>
     <span hidden="hidden" th:text="${#authentication.getPrincipal().getUsername()}"></span>
     <div class="text-center mb-3">
@@ -31,12 +31,8 @@
     </div>
 </main>
 
-<th:block th:include="~{fragments/footer}"/>
-<script
-        src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="/js/medicine.js"></script>
+<span th:replace="fragments/footer :: footer"></span>
+<script th:src="@{/js/medicine.js}"></script>
+
 </body>
 </html>

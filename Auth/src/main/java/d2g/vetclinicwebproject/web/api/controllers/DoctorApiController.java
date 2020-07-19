@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,11 +44,11 @@ public class DoctorApiController {
     public ResponseEntity<DoctorApiControllerModel> getDoctorHome(@AuthenticationPrincipal Principal principal) {
         DoctorApiControllerModel doctor = modelMapper.map(doctorService.getDoctorHome(principal.getName()), DoctorApiControllerModel.class);
 
-        if (doctor != null){
-            return new ResponseEntity<>(doctor, HttpStatus.OK);
+        if (doctor.getId() != null){
+            return ResponseEntity.ok(doctor);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/schedule")
@@ -58,10 +59,10 @@ public class DoctorApiController {
                 .collect(Collectors.toList());
 
         if (schedules.size() != 0){
-            return new ResponseEntity<>(schedules, HttpStatus.OK);
+            return ResponseEntity.ok(schedules);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 
     @ModelAttribute("addSchedule")
@@ -70,7 +71,7 @@ public class DoctorApiController {
     }
 
     @PostMapping("/schedule")
-    public ResponseEntity<Void> addSchedule(@ModelAttribute("addSchedule") AddScheduleApiControllerModel model, BindingResult bindingResult, HttpSession session) {
+    public ResponseEntity<AddScheduleServiceModel> addSchedule(@Valid @ModelAttribute("addSchedule") AddScheduleApiControllerModel model, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, SCHEDULE_PAGE).build();
         }
@@ -87,14 +88,14 @@ public class DoctorApiController {
     }
 
     @PostMapping("/add-treatment")
-    public ResponseEntity<Void> addTreatmentToAnimal(@ModelAttribute("addTreatment") AddTreatmentApiControllerModel model, HttpSession session) {
+    public ResponseEntity<AddTreatmentServiceModel> addTreatmentToAnimal(@Valid @ModelAttribute("addTreatment") AddTreatmentApiControllerModel model, HttpSession session) {
         doctorService.addTreatmentToAnimal(modelMapper.map(model, AddTreatmentServiceModel.class), session.getAttribute("scheduleId").toString());
 
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, SCHEDULE_PAGE).build();
     }
 
     @PostMapping("/delete-finished-schedule/{scheduleId}")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable String scheduleId, AddScheduleApiControllerModel model) {
+    public ResponseEntity<AddScheduleServiceModel> deleteSchedule(@PathVariable String scheduleId, AddScheduleApiControllerModel model) {
         doctorService.deleteSchedule(scheduleId, modelMapper.map(model, AddScheduleServiceModel.class));
 
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, SCHEDULE_PAGE).build();
@@ -120,7 +121,7 @@ public class DoctorApiController {
     }
 
     @PostMapping("/add-medicine")
-    public ResponseEntity<Void> addMedicine(@ModelAttribute("addNewMedicine") AddMedicineApiControlModel model, BindingResult bindingResult) {
+    public ResponseEntity<MedicineServiceModel> addMedicine(@Valid @ModelAttribute("addNewMedicine") AddMedicineApiControlModel model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, MEDICINE_PAGE).build();
         }
