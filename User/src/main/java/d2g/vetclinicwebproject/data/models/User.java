@@ -1,5 +1,6 @@
 package d2g.vetclinicwebproject.data.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import static d2g.vetclinicwebproject.config.Constant.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
     @NotEmpty
@@ -40,6 +42,6 @@ public class User extends BaseEntity {
     @Column(name = "phone_number", columnDefinition = "")
     @Pattern(regexp = PHONE_NUMBER_VALIDATE)
     private String phoneNumber;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Animal> animals;
 }

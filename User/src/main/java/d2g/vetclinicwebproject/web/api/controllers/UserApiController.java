@@ -31,7 +31,7 @@ public class UserApiController {
     }
 
     @PostMapping("/register-user")
-    public ResponseEntity<UserServiceModel> registerUser(@RequestBody UserRegisterApiControllerModel model) {
+    public ResponseEntity<UserServiceModel> registerUser(@RequestBody UserRegisterApiControllerModel model) throws IllegalAccessException {
         userService.registerUser(modelMapper.map(model, UserServiceModel.class));
 
         return ResponseEntity.ok().build();

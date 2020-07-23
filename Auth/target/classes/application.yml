@@ -1,0 +1,46 @@
+server:
+  port: 8081
+
+#Data Source Properties
+spring:
+  application:
+    name: vet-clinic-web-project-auth-service
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/user_roles?useSSL=false&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: "${DB_USER:root}"
+    password: "${DB_PASSWORD:}"
+#JPA Properties
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: FALSE
+        show_sql: FALSE
+        ddl-auto: update
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          facebook:
+#            client-id: 596493257866350
+#            client-secret: 94406040e61d257c47ec385fc253dc4c
+
+###Logging Levels
+#Disable the default loggers
+#Show SQL executed with parameter bindings
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor: TRACE
+    blog: WARN
+
+
+#hystrix
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream

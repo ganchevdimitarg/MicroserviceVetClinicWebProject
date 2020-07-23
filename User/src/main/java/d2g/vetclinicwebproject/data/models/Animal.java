@@ -1,6 +1,8 @@
 package d2g.vetclinicwebproject.data.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -13,6 +15,8 @@ import javax.validation.constraints.Size;
 @Table(name = "animals")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Animal extends BaseEntity {
     @Column(nullable = false)
     @NotEmpty

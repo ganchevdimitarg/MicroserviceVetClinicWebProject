@@ -12,21 +12,21 @@ import d2g.vetclinicwebproject.services.models.UserServiceModel;
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    private static final String NO_SUCH_USER_MESSAGE = "Not such User";
-    private static final String INVALID_LOGIN_PARAMS = "Username or password is not valid";
+    private static final String NO_SUCH_USER = "Not such User";
+    private static final String INVALID_PARAMS = "Username or password is not valid";
+    private static final String DATA_IS_NOT_VALID = "The data is not valid. Try again";
 
     private final UserRepository userRepository;
     private final AnimalRepository animalRepository;
+    private final UserServiceValidation validation;
     private final ModelMapper modelMapper;
 
     @Override
-    public void registerUser(UserServiceModel model) {
+    public void registerUser(UserServiceModel model) throws IllegalAccessException {
+        if(!validation.isValidUserRegister(model)){
+            throw new IllegalAccessException(INVALID_PARAMS);
+        }
         userRepository.saveAndFlush(modelMapper.map(model, User.class));
-    }
-
-    @Override
-    public UserServiceModel findById(String id) {
-        return modelMapper.map(userRepository.findById(id), UserServiceModel.class);
     }
 
     @Override
@@ -35,12 +35,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserServiceModel findByUsernameAndPassword(String username, String password) {
-        return modelMapper.map(getUserByUsernameAndPassword(username, password), UserServiceModel.class);
-    }
-
-    @Override
     public void updateUser(UserServiceModel model) {
+        if (!validation.isValidUpdateInfo(model)){
+            throw new IllegalArgumentException(DATA_IS_NOT_VALID);
+        }
         User user = modelMapper.map(model, User.class);
         userRepository.update(user.getName(), user.getEmail(), user.getAddress(), user.getPhoneNumber(), user.getUsername());
     }
@@ -55,11 +53,6 @@ public class UserServiceImpl implements UserService {
 
     private User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException(NO_SUCH_USER_MESSAGE));
-    }
-
-    private User getUserByUsernameAndPassword(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password)
-                .orElseThrow(() -> new UserNotFoundException(INVALID_LOGIN_PARAMS));
+                .orElseThrow(() -> new UserNotFoundException(NO_SUCH_USER));
     }
 }

@@ -16,13 +16,12 @@ import d2g.vetclinicwebproject.services.models.AnimalServiceModel;
 import d2g.vetclinicwebproject.services.services.animal.validation.AnimalValidationService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class AnimalServiceImpl implements AnimalService {
-    private final static String INCORRECTLY_ENTERED_DATA = "Incorrectly entered data! Please try again! OR Name is not available!";
+    private final static String INCORRECTLY_ENTERED_DATA = "Incorrectly entered data! Please try again!";
     private final static String NOT_FOUNT_ANIMAL = "No such animal";
     private final static String NOT_FOUNT_USER = "No such user";
 
@@ -33,11 +32,12 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public void save(AnimalServiceModel model, String username) {
-        if (!validationService.isValid(model)) {
+        if (!validationService.isValidAnimalInfo(model)) {
             throw new AnimalErrorHandlerException(INCORRECTLY_ENTERED_DATA);
         }
         Animal animal = modelMapper.map(model, Animal.class);
-        animal.setUser(userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(NOT_FOUNT_USER)));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(NOT_FOUNT_USER));
+        animal.setUser(user);
 
         animalRepository.saveAndFlush(animal);
     }
@@ -60,9 +60,12 @@ public class AnimalServiceImpl implements AnimalService {
 
 
     @Override
-    public void addMedicineDisease(String animalId, String medicineName, String disease) {
+    public void addMedicineDisease(String animalId, String medicine, String disease) {
+        if (!validationService.isValidMedicineDisease(medicine, disease)){
+            throw new IllegalArgumentException(INCORRECTLY_ENTERED_DATA);
+        }
         Animal animal = animalRepository.findById(animalId).get();
-        animal.setMedicine(medicineName);
+        animal.setMedicine(medicine);
         animal.setDisease(disease);
 
         animalRepository.saveAndFlush(animal);

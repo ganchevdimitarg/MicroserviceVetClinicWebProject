@@ -28,7 +28,7 @@ public class FeedbackRestController {
     private final ModelMapper modelMapper;
 
     @PostMapping("/contact")
-    public ResponseEntity<Void> sendFeedback(@RequestBody FeedbackControllerModel feedback, BindingResult bindingResult) {
+    public ResponseEntity<FeedbackControllerModel> sendFeedback(@RequestBody FeedbackControllerModel feedback, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException("Feedback is not valid");
         }
