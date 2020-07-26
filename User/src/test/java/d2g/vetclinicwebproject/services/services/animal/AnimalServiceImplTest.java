@@ -7,8 +7,7 @@ import d2g.vetclinicwebproject.data.repositories.UserRepository;
 import d2g.vetclinicwebproject.errors.AnimalErrorHandlerException;
 import d2g.vetclinicwebproject.errors.UserNotFoundException;
 import d2g.vetclinicwebproject.services.models.AnimalServiceModel;
-import d2g.vetclinicwebproject.services.models.UserServiceModel;
-import d2g.vetclinicwebproject.services.services.TestBase;
+import d2g.vetclinicwebproject.services.TestBase;
 import d2g.vetclinicwebproject.services.services.animal.validation.AnimalValidationService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -16,23 +15,26 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class AnimalServiceImplTest extends TestBase {
     private final static String INCORRECTLY_ENTERED_DATA = "Incorrectly entered data! Please try again!";
     private final static String NOT_FOUNT_ANIMAL = "No such animal";
     private final static String NOT_FOUNT_USER = "No such user";
 
-    @Mock
+    @MockBean
     UserRepository userRepository;
-    @Mock
+    @MockBean
     AnimalRepository animalRepository;
-    @Mock
+    @MockBean
     AnimalValidationService validationService;
 
     @Autowired
@@ -42,11 +44,14 @@ class AnimalServiceImplTest extends TestBase {
 
     @Test
     void save_whenAnimalInfoIsValid_shouldSaveAnimalInDB() {
-        AnimalServiceModel animal = new AnimalServiceModel("1", "dog", "Max", 19.0, "", "none", "none");
-        User user = new User("ivan", "1", "Ivan", "ivan@abv.bg", "Varna", "0888888888", new ArrayList<>());
-        Mockito.when(validationService.isValidAnimalInfo(animal)).thenReturn(true);
-        Mockito.when(userRepository.findByUsername(user.getUsername())).thenReturn(java.util.Optional.of(user));
-        animalService.save(animal, user.getUsername());
+        String username = "Dimitar";
+        AnimalServiceModel animal = mock(AnimalServiceModel.class);
+        User user = mock(User.class);
+
+        Mockito.when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
+        Mockito.when(!validationService.isValidAnimalInfo(animal)).thenReturn(true);
+
+        animalService.save(animal, username);
 
         ArgumentCaptor<Animal> argument = ArgumentCaptor.forClass(Animal.class);
         Mockito.verify(animalRepository).saveAndFlush(argument.capture());
@@ -71,8 +76,9 @@ class AnimalServiceImplTest extends TestBase {
     @Test
     void save_whenUserNotFound_shouldThrowException() {
         Exception exception = assertThrows(UserNotFoundException.class, () -> {
-            AnimalServiceModel animal = new AnimalServiceModel("1", "dog", "Max", 19.0, "", "none", "none");
+            AnimalServiceModel animal = mock(AnimalServiceModel.class);
             String username = "stamen";
+            Mockito.when(!validationService.isValidAnimalInfo(animal)).thenReturn(true);
             animalService.save(animal, username);
         });
 
@@ -84,7 +90,7 @@ class AnimalServiceImplTest extends TestBase {
 
     @Test
     void findByName_whenNameExists_shouldReturnAnimal() {
-        Animal animalExpect = new Animal("dog", "Max", 19.0, "Bacterial", "antibiotics",  new User());
+        Animal animalExpect = mock(Animal.class);
         String name = "Max";
         Mockito.when(animalRepository.findByName(name)).thenReturn(java.util.Optional.of(animalExpect));
 
@@ -116,6 +122,7 @@ class AnimalServiceImplTest extends TestBase {
                 List.of(new Animal("", "Max", 1, "", "", new User()),
                         new Animal("", "Rock", 1, "", "", new User())));
 
+        Mockito.when(userRepository.findByUsername(username)).thenReturn(Optional.ofNullable(user));
         List<AnimalServiceModel> animals = animalService.getCurrentUserAnimal(username);
 
         assertEquals(user.getAnimals().get(0).getName(), animals.get(0).getName());
@@ -135,8 +142,10 @@ class AnimalServiceImplTest extends TestBase {
 
     @Test
     void addMedicineDisease_whenMedicineAndDiseaseIsValid_shouldSaveInDB() {
-        Animal animalExpect = new Animal("dog", "Max", 19.0, "", "",  new User());
-        animalExpect.setId("1");
+        Animal animalExpect = new Animal();
+        animalExpect.setMedicine("antibiotic");
+        animalExpect.setDisease("Bacterial");
+
         Mockito.when(animalRepository.findById("1")).thenReturn(Optional.of(animalExpect));
         animalService.addMedicineDisease("1", "antibiotic", "Bacterial");
 
@@ -144,48 +153,15 @@ class AnimalServiceImplTest extends TestBase {
     }
 
     @Test
-    void addMedicineDisease_whenMedicineIsLessLength_shouldThrowException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            animalService.addMedicineDisease("1", "", "Bacterial");
+    void addMedicineDisease_whenAnimalNotExist_shouldThrowException() {
+        assertThrows(NoSuchElementException.class, () -> {
+            Animal animalExpect = new Animal();
+            animalExpect.setMedicine("antibiotic");
+            animalExpect.setDisease("Bacterial");
+
+            Mockito.when(animalRepository.findById("2")).thenReturn(Optional.of(animalExpect));
+            animalService.addMedicineDisease("1", "antibiotic", "Bacterial");
         });
-
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(INCORRECTLY_ENTERED_DATA));
-    }
-
-    @Test
-    void addMedicineDisease_whenMedicinesMoreThanLength_shouldThrowException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            animalService.addMedicineDisease("1", "antibiotics", "Bacterial");
-        });
-
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(INCORRECTLY_ENTERED_DATA));
-    }
-
-    @Test
-    void addMedicineDisease_whenDiseaseIsLessLength_shouldThrowException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            animalService.addMedicineDisease("1", "antibiotic", "");
-        });
-
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(INCORRECTLY_ENTERED_DATA));
-
-    }
-
-    @Test
-    void addMedicineDisease_whenDiseaseMoreThanLength_shouldThrowException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            animalService.addMedicineDisease("1", "antibiotic", "Bacterial infections");
-        });
-
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(INCORRECTLY_ENTERED_DATA));
     }
 
     @Test

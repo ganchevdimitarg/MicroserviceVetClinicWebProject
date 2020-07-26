@@ -9,7 +9,6 @@ import d2g.vetclinicwebproject.data.repositories.DoctorRepository;
 import d2g.vetclinicwebproject.data.repositories.ScheduleRepository;
 import d2g.vetclinicwebproject.services.models.ScheduleServiceModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,14 +16,17 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
+    private static final String INCORRECT_DATE = "Please, try again!";
+
     private final DoctorRepository doctorRepository;
     private final ScheduleRepository scheduleRepository;
+    private final ScheduleServiceValidation validation;
 
     @Override
     public void save(ScheduleServiceModel model, String id) {
         Doctor doctor = doctorRepository.findByName(model.getDoctor());
-        if (doctor == null) {
-            throw new NullPointerException("There is no such doctor");
+        if (!validation.isValidSchedule(model) && doctor == null) {
+            throw new IllegalArgumentException(INCORRECT_DATE);
         }
 
         Schedule schedule = new Schedule();

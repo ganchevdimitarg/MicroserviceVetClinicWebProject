@@ -13,11 +13,17 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class MedicineServiceImpl implements MedicineService {
+    private static final String INVALID_DATE = "Invalid date";
+
     private final MedicineRepository medicineRepository;
+    private final MedicineServiceValidation validation;
     private final ModelMapper modelMapper;
 
     @Override
     public void save(MedicineServiceModel model) {
+        if (!validation.isMedicineValid(model)){
+            throw new IllegalArgumentException(INVALID_DATE);
+        }
         medicineRepository.saveAndFlush(modelMapper.map(model, Medicine.class));
     }
 

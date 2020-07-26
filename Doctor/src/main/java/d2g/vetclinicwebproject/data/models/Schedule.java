@@ -1,5 +1,6 @@
 package d2g.vetclinicwebproject.data.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "schedule")
 @Getter
 @Setter
+@AllArgsConstructor
 public class Schedule extends BaseEntity {
     @Column(name = "data_of_review", nullable = false)
     @NotNull

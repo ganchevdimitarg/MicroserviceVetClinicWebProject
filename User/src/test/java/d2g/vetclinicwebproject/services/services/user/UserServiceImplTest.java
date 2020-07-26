@@ -5,7 +5,7 @@ import d2g.vetclinicwebproject.data.repositories.AnimalRepository;
 import d2g.vetclinicwebproject.data.repositories.UserRepository;
 import d2g.vetclinicwebproject.errors.UserNotFoundException;
 import d2g.vetclinicwebproject.services.models.UserServiceModel;
-import d2g.vetclinicwebproject.services.services.TestBase;
+import d2g.vetclinicwebproject.services.TestBase;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -41,8 +41,6 @@ class UserServiceImplTest extends TestBase {
     @Test
     void registerUser_whenUsernameAndPasswordIsValid_shouldSuccessfulRegisterUser() throws IllegalAccessException {
         UserServiceModel userModel = mock(UserServiceModel.class);
-        userModel.setUsername("dimitar");
-        userModel.setPassword("111111");
 
         Mockito.when(!validation.isValidUserRegister(userModel)).thenReturn(true);
         userService.registerUser(userModel);

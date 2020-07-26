@@ -61,9 +61,6 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public void addMedicineDisease(String animalId, String medicine, String disease) {
-        if (!validationService.isValidMedicineDisease(medicine, disease)){
-            throw new IllegalArgumentException(INCORRECTLY_ENTERED_DATA);
-        }
         Animal animal = animalRepository.findById(animalId).get();
         animal.setMedicine(medicine);
         animal.setDisease(disease);

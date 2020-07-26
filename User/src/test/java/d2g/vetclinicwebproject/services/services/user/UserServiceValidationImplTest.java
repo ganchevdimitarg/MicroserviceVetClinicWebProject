@@ -1,10 +1,9 @@
 package d2g.vetclinicwebproject.services.services.user;
 
 import d2g.vetclinicwebproject.services.models.UserServiceModel;
-import d2g.vetclinicwebproject.services.services.TestBase;
+import d2g.vetclinicwebproject.services.TestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
 

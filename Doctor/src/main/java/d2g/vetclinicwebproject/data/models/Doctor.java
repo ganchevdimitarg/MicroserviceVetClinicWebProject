@@ -1,5 +1,6 @@
 package d2g.vetclinicwebproject.data.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import static d2g.vetclinicwebproject.config.Constant.PASSWORD_VALIDATE;
 @Table(name = "doctors")
 @Getter
 @Setter
+@AllArgsConstructor
 public class Doctor extends BaseEntity {
     @Column(nullable = false, unique = true)
     @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)

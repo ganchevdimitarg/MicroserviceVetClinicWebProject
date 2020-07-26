@@ -1,7 +1,7 @@
 package d2g.vetclinicwebproject.services.services.animal;
 
+import d2g.vetclinicwebproject.services.TestBase;
 import d2g.vetclinicwebproject.services.models.AnimalServiceModel;
-import d2g.vetclinicwebproject.services.services.TestBase;
 import d2g.vetclinicwebproject.services.services.animal.validation.AnimalValidationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +71,20 @@ class AnimalValidationServiceImplTest extends TestBase {
     @Test
     void isValid_whenAgeIsEqualsToZero_shouldReturnFalse() {
         AnimalServiceModel animal = new AnimalServiceModel("1", "dog", "Max", 0, "", "none", "none");
+
+        assertFalse(validation.isValidAnimalInfo(animal));
+    }
+
+    @Test
+    void isValidMedicineDisease_whenDiseaseIsLessMaxLength_shouldReturnFalse() {
+        AnimalServiceModel animal = new AnimalServiceModel("1", "dog", "Maxsasaas", 19.0, "", "nodadasdasadasdasdadasdne", "none");
+
+        assertFalse(validation.isValidAnimalInfo(animal));
+    }
+
+    @Test
+    void isValidMedicineDisease_whenMedicineIsLessMaxLength_shouldReturnFalse() {
+        AnimalServiceModel animal = new AnimalServiceModel("1", "dog", "Maxsasaas", 19.0, "", "none", "nodadasdasadasdasdadasdne");
 
         assertFalse(validation.isValidAnimalInfo(animal));
     }

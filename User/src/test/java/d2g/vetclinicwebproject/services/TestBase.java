@@ -1,4 +1,4 @@
-package d2g.vetclinicwebproject.services.services;
+package d2g.vetclinicwebproject.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;

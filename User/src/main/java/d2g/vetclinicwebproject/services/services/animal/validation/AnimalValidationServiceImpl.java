@@ -13,12 +13,6 @@ public class AnimalValidationServiceImpl implements AnimalValidationService {
         return isBreedValid(animal) && isNameValid(animal) && isAgeValid(animal);
     }
 
-    @Override
-    public boolean isValidMedicineDisease(String medicine, String disease) {
-        return isValidMedicine(medicine) && isValidDisease(disease);
-    }
-
-
     public boolean isBreedValid(AnimalServiceModel animal) {
         return !animal.getBreed().isEmpty() && (animal.getBreed().length() >= 3 && animal.getBreed().length() <= 6);
     }
@@ -29,13 +23,5 @@ public class AnimalValidationServiceImpl implements AnimalValidationService {
 
     public boolean isAgeValid(AnimalServiceModel animal) {
         return animal.getAge() > 0;
-    }
-
-    private boolean isValidMedicine(String medicine) {
-        return medicine.length() >= 3 && medicine.length() <= 10;
-    }
-
-    private boolean isValidDisease(String disease) {
-        return disease.length() >= 3 && disease.length() <= 10;
     }
 }

@@ -6,5 +6,4 @@ import d2g.vetclinicwebproject.services.models.AnimalServiceModel;
 public interface AnimalValidationService {
     boolean isValidAnimalInfo(AnimalServiceModel animal);
 
-    boolean isValidMedicineDisease(String medicine, String disease);
 }
