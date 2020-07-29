@@ -57,6 +57,6 @@ public class FeedbackRestController {
         // Send mail
         mailSender.send(mailMessage);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }

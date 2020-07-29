@@ -10,10 +10,10 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -38,9 +38,11 @@ public class GuestServiceImpl implements GuestService {
             })
     @Override
     public GuestServiceModel getUserHome(String username) {
-        return restTemplate.exchange(MICROSERVICE_USER_URL + username,
+        ResponseEntity<GuestServiceModel> resp = restTemplate.exchange(MICROSERVICE_USER_URL + username,
                 HttpMethod.GET, null, new ParameterizedTypeReference<GuestServiceModel>() {
-                }).getBody();
+                });
+
+        return resp.getStatusCode() == HttpStatus.OK ? resp.getBody() : null;
     }
 
     @Override

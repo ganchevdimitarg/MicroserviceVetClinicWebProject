@@ -30,17 +30,21 @@ public class ScheduleApiController {
 
     @GetMapping("/schedules")
     public ResponseEntity<List<ScheduleApiControllerModel>> getSchedule(HttpSession session) {
-        List<ScheduleApiControllerModel> models = scheduleService.getAll()
+        List<ScheduleApiControllerModel> schedules = scheduleService.getAll()
                 .stream()
                 .map(s -> modelMapper.map(s, ScheduleApiControllerModel.class))
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<>(models, HttpStatus.OK);
+        if (schedules.size() != 0){
+            return ResponseEntity.ok().body(schedules);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
 
     @PostMapping("/schedule")
-    public ResponseEntity<Void> addSchedule(@RequestBody ScheduleApiControllerModel model) {
+    public ResponseEntity<ScheduleApiControllerModel> addSchedule(@RequestBody ScheduleApiControllerModel model) {
         ScheduleServiceModel scheduleServiceModel = modelMapper.map(model, ScheduleServiceModel.class);
         AnimalApiControllerModel animalApiControllerModel;
         try {
@@ -51,21 +55,21 @@ public class ScheduleApiController {
 
         scheduleService.save(scheduleServiceModel, animalApiControllerModel.getId());
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/schedule/delete/{scheduleId}")
-    public ResponseEntity<Void> deleteFinishedSchedule(@PathVariable String scheduleId) {
+    public ResponseEntity<ScheduleApiControllerModel> deleteFinishedSchedule(@PathVariable String scheduleId) {
         scheduleService.deleteScheduleDelete(scheduleId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/schedule/add-treatment/{scheduleId}")
-    public ResponseEntity<Void> addTreatment(@RequestBody AddTreatmentApiControllerModel model, @PathVariable String scheduleId){
+    public ResponseEntity<AddTreatmentApiControllerModel> addTreatment(@RequestBody AddTreatmentApiControllerModel model, @PathVariable String scheduleId){
         Schedule schedule = scheduleService.findById(scheduleId);
         restTemplate.postForObject(MICROSERVICE_USER_URL + "add-treatment/" + schedule.getAnimalId(), model, AddTreatmentApiControllerModel.class);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }

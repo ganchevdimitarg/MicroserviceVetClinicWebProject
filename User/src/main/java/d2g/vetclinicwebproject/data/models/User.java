@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import static d2g.vetclinicwebproject.config.Constant.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity {
+public class User extends BaseEntity implements Serializable {
     @Column(nullable = false, unique = true)
     @NotEmpty
     @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)

@@ -68,4 +68,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         Optional<Schedule> schedule = scheduleRepository.findById(id);
         return schedule.get();
     }
+
+    @Override
+    public void deleteAll() {
+        scheduleRepository.deleteAll();
+    }
 }

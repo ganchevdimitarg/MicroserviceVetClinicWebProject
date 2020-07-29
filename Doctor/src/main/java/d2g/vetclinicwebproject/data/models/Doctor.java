@@ -21,7 +21,7 @@ import static d2g.vetclinicwebproject.config.Constant.PASSWORD_VALIDATE;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Doctor extends BaseEntity {
+public class Doctor extends BaseEntity implements Serializable {
     @Column(nullable = false, unique = true)
     @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)
     @NotEmpty

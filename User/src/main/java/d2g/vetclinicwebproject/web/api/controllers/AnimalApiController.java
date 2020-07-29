@@ -23,7 +23,7 @@ public class AnimalApiController {
 
     @GetMapping("/animals/{username}")
     public ResponseEntity<List<AnimalApiControllerModel>> getAnimals(@PathVariable String username) {
-        List<AnimalApiControllerModel> models = animalService.getCurrentUserAnimal(username)
+        List<AnimalApiControllerModel> animals = animalService.getCurrentUserAnimal(username)
                 .stream()
                 .map(s -> {
                     AnimalApiControllerModel animal = new AnimalApiControllerModel();
@@ -37,35 +37,44 @@ public class AnimalApiController {
                 })
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<>(models, HttpStatus.OK);
+        if (animals.size() != 0){
+            return ResponseEntity.ok().body(animals);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/animal/{animalName}")
     public ResponseEntity<AnimalApiControllerModel> getAnimalByName(@PathVariable String animalName) {
-        return new ResponseEntity<>(modelMapper.map(animalService.findByName(animalName),
-                AnimalApiControllerModel.class),HttpStatus.OK);
+        AnimalApiControllerModel animal = modelMapper.map(animalService.findByName(animalName), AnimalApiControllerModel.class);
+
+        if (animal != null){
+            return ResponseEntity.ok().body(animal);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/animal/add-animal/{username}")
-    public ResponseEntity<Void> addUserAnimal(@RequestBody AddAnimalApiControllerModel model, @PathVariable String username) {
+    public ResponseEntity<AddAnimalApiControllerModel> addUserAnimal(@RequestBody AddAnimalApiControllerModel model, @PathVariable String username) {
         animalService.save(modelMapper.map(model, AnimalServiceModel.class), username);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/animal/delete-animal/{animalId}")
-    public ResponseEntity<Void> deleteUserAnimal(@PathVariable String animalId) {
+    public ResponseEntity<AddAnimalApiControllerModel> deleteUserAnimal(@PathVariable String animalId) {
         animalService.deleteAnimal(animalId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
 
     }
 
     @PostMapping("/animal/add-treatment/{animalId}")
-    public ResponseEntity<Void> addTreatment(@RequestBody AddTreatmentControllerModel model, @PathVariable String animalId){
+    public ResponseEntity<AddTreatmentControllerModel> addTreatment(@RequestBody AddTreatmentControllerModel model, @PathVariable String animalId){
         animalService.addMedicineDisease(animalId, model.getMedicine(), model.getDisease());
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     private void setMedicine(AnimalServiceModel s, AnimalApiControllerModel animal) {

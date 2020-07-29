@@ -100,4 +100,5 @@ class ScheduleServiceImplTest extends TestBase {
 
         assertEquals("1", scheduleDB.getId());
     }
+
 }

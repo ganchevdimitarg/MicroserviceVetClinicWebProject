@@ -26,13 +26,17 @@ public class MedicineApiController {
                 .map(m -> modelMapper.map(m, MedicineApiControllerModel.class))
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<>(medicines, HttpStatus.OK);
+        if (medicines.size() != 0){
+            return ResponseEntity.ok().body(medicines);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/add-medicine")
-    private ResponseEntity<Void> addMedicine(@RequestBody MedicineApiControllerModel medicine){
+    private ResponseEntity<MedicineApiControllerModel> addMedicine(@RequestBody MedicineApiControllerModel medicine){
         medicineService.save(modelMapper.map(medicine, MedicineServiceModel.class));
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }

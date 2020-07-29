@@ -14,4 +14,6 @@ public interface ScheduleService {
     void deleteScheduleDelete(String scheduleId);
 
     Schedule findById(String id);
+
+    void deleteAll();
 }

@@ -8,13 +8,14 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "schedule")
 @Getter
 @Setter
 @AllArgsConstructor
-public class Schedule extends BaseEntity {
+public class Schedule extends BaseEntity implements Serializable {
     @Column(name = "data_of_review", nullable = false)
     @NotNull
     @NotEmpty

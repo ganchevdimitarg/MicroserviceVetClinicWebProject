@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -16,7 +17,7 @@ import java.util.Date;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Feedback extends BaseEntity {
+public class Feedback extends BaseEntity implements Serializable {
     @Column(nullable = false)
     @NotEmpty
     private String name;

@@ -10,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "animals")
@@ -17,7 +18,7 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Animal extends BaseEntity {
+public class Animal extends BaseEntity implements Serializable {
     @Column(nullable = false)
     @NotEmpty
     @Size(min = 3, max = 6)
