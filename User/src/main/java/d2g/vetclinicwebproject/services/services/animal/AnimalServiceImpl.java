@@ -71,7 +71,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public void addMedicineDisease(String animalId, String medicine, String disease) {
-        Animal animal = animalRepository.findById(animalId).get();
+        Animal animal = animalRepository.findById(animalId).orElseThrow(() -> new IllegalArgumentException(NOT_FOUNT_ANIMAL));
         animal.setMedicine(medicine);
         animal.setDisease(disease);
 

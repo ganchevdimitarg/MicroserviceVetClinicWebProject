@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
-<head>
-<link crossorigin="anonymous"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      rel="stylesheet"/>
+<head><title></title>
+    <link crossorigin="anonymous"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          rel="stylesheet"/>
 </head>
 <body>
 <div sec:authorize="isAnonymous()">
@@ -78,7 +78,7 @@
                         <li class="nav-item" th:classappend="${activeTab == 'add-animal'}? 'active'">
                             <a class="nav-link js-scroll-trigger" th:href="@{/user/add-animal}">Add Pet</a>
                         </li>
-                        <li class="nav-item" th:classappend="${activeTab == 'pet'}? 'active'">
+                        <li class="nav-item" th:classappend="${activeTab == 'pets'}? 'active'">
                             <a class="nav-link js-scroll-trigger" th:href="@{/user/pet}">Pets</a>
                         </li>
                         <li class="nav-item" th:classappend="${activeTab == 'contact'}? 'active'">

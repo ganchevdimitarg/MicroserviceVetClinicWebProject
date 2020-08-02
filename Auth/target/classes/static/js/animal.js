@@ -16,7 +16,7 @@ const toString = ({id, breed, name, age, disease, medicine}) => {
                     <div>${disease}</div>
                 </div>
                 <div class="col-md-2">
-                    <div>${medicine}</div>
+                    <a class="alert-link" href="/doctor/medicine">${medicine}</a>
                 </div>
                 <form action="/user/api/delete-user-animal/${id}" method="post">
                     <input type="submit" value="Delete" class="col-md-3 btn btn-danger"/>

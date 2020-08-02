@@ -48,7 +48,7 @@ public class DoctorApiController {
             return ResponseEntity.ok(doctor);
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "/sign-in").build();
     }
 
     @GetMapping("/schedule")
