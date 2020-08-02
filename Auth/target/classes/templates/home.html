@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
-<head th:replace="fragments/head :: head"></head>
+<head th:replace="fragments/head :: head"> <title></title></head>
 <body>
 <span th:replace="fragments/header :: header"></span>
 <main>
@@ -11,7 +11,7 @@
             <div id="campd" class="container"></div>
         </div>
     </div>
-    <div sec:authorize="hasRole('USER')">
+    <div sec:authorize="hasRole('ROLE_USER')">
         <div class="text-center mb-3">
         </div>
         <div id="camp" class="container"></div>
@@ -51,7 +51,10 @@
         </div>
     </div>
 </main>
+<th:block th:include="~{fragments/loading}"></th:block>
+
 <span th:replace="fragments/footer :: footer"></span>
+
 <script sec:authorize="hasRole('ADMIN')" th:src="@{/js/doctor-home.js}"></script>
 <script sec:authorize="hasRole('USER')" th:src="@{/js/user-home.js}"></script>
 </body>

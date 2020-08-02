@@ -39,7 +39,7 @@ public class GuestApiController {
     private final CloudinaryService cloudinaryService;
 
     @GetMapping("/user-home")
-    public ResponseEntity<GuestViewApiControllerModel> getUserHome(@AuthenticationPrincipal Principal principal) {
+    public ResponseEntity<GuestViewApiControllerModel> getUserHome(@AuthenticationPrincipal Principal principal) throws InterruptedException {
         GuestViewApiControllerModel user = modelMapper.map(guestService.getUserHome(principal.getName()), GuestViewApiControllerModel.class);
 
         if (user != null){

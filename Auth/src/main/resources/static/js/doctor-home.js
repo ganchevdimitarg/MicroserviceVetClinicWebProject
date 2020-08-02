@@ -24,5 +24,7 @@ fetch(URLS.items)
         const itemString = toString(item);
         result += itemString;
 
+        $('#loader-page').hide()
         $('#campd').append(result);
     });
+$('#loader-page').hide()

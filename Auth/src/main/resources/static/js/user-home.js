@@ -25,6 +25,7 @@ const toString = ({id, name, address, phoneNumber, imageUrl}) => {
     return `<div class="row">${columns}</div>`
 };
 
+$('#loader-page').show();
 fetch(URLS.items)
     .then(response => response.json())
     .then(item => {
@@ -32,5 +33,6 @@ fetch(URLS.items)
         const itemString = toString(item);
         result += itemString;
 
+        $('#loader-page').hide()
         $('#camp').append(result);
     });

@@ -1304,7 +1304,28 @@ textarea.input1 + .shadow-input1 {
     height: 350px;
 }
 
-.error-page{
+.error-page {
     margin-top: 100px;
 }
-/*Register form*/
+
+/*Loading*/
+#loader-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 100vh;
+    color: white;
+    font-size: 2.3em;
+    text-align: center;
+}
+
+#loader-page .loader-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("../images/loading.gif") no-repeat center center fixed;
+    background-size: 100px;
+}
+
