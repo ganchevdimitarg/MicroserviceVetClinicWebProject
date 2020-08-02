@@ -36,5 +36,7 @@ fetch(URLS.items)
             }
         });
 
+        $('#loader-page').hide()
         $('#camp').append(result);
     });
+$('#loader-page').hide()

@@ -34,5 +34,7 @@ fetch(URLS.items)
                 result += itemString;
         });
 
+        $('#loader-page').hide()
         $('#camp').append(result);
     });
+$('#loader-page').hide()
