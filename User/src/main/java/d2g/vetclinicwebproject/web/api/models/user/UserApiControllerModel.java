@@ -13,7 +13,7 @@ public class UserApiControllerModel {
     private String id;
     private String username;
     private String name;
-    private String email;
     private String address;
     private String phoneNumber;
+    private String imageUrl;
 }

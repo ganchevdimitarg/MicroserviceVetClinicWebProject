@@ -1304,5 +1304,7 @@ textarea.input1 + .shadow-input1 {
     height: 350px;
 }
 
-
+.error-page{
+    margin-top: 100px;
+}
 /*Register form*/

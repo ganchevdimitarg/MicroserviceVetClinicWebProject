@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head"></head>
-<body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+
+<body marginwidth="0" marginheight="0" th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
 <span th:replace="fragments/header :: header"></span>
-
-<h1 th:text="${httpStatus} - ${httpStatus.reasonPhrase}">404</h1>
-<p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-<a href="index.html" th:href="@{/index}">Back to Home Page</a>
-
+<div class="container error-page">
+    <div class="row">
+        <h1>Oooops... Something went wrong!</h1>
+    </div>
+    <div class="row rowDesign">
+        <div class="col-md-4 ml-auto">
+            <span class="legend">Date</span>
+        </div>
+        <div class="col-md-8">
+            <span th:text="${timestamp}"></span>
+        </div>
+    </div>
+    <div class="row rowDesign">
+        <div class="col-md-4 ml-auto">
+            <span class="legend">Error</span>
+        </div>
+        <div class="col-md-8">
+            <span th:text="${error}"></span>
+        </div>
+    </div>
+    <div class="row rowDesign">
+        <div class="col-md-4 ml-auto">
+            <span class="legend">Status</span>
+        </div>
+        <div class="col-md-8">
+            <span th:text="${httpStatus}"></span>
+        </div>
+    </div>
+    <div class="row rowDesign">
+        <div class="col-md-4 ml-auto">
+            <span class="legend">Message</span>
+        </div>
+        <div class="col-md-8">
+            <span th:text="${message}"></span>
+            <span th:text="${errorMessage}"></span>
+        </div>
+    </div>
+    <a href="index.html" th:href="@{/home}">Back to Home Page</a>
+</div>
 <span th:replace="fragments/footer :: footer"></span>
-
 </body>
 </html>

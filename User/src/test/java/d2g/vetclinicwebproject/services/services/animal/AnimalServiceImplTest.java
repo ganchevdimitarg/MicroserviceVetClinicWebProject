@@ -8,16 +8,13 @@ import d2g.vetclinicwebproject.errors.AnimalErrorHandlerException;
 import d2g.vetclinicwebproject.errors.UserNotFoundException;
 import d2g.vetclinicwebproject.services.models.AnimalServiceModel;
 import d2g.vetclinicwebproject.services.TestBase;
-import d2g.vetclinicwebproject.services.services.animal.validation.AnimalValidationService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -112,13 +109,13 @@ class AnimalServiceImplTest extends TestBase {
 
     @Test
     void getCurrentUserAnimal_whenUserExists_shouldReturnListOfAnimals() {
-        String username = "ivan";
-        User user = new User("ivan",
+        String username = "ivan@abv.bg";
+        User user = new User("ivan@abv.bg",
                 "111111",
-                "Ivan",
                 "ivan@abv.bg",
                 "Varna, Republica",
                 "0888888888",
+                "",
                 List.of(new Animal("", "Max", 1, "", "", new User()),
                         new Animal("", "Rock", 1, "", "", new User())));
 

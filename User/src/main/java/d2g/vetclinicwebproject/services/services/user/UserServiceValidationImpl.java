@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static d2g.vetclinicwebproject.config.Constant.EMAIL_VALIDATE;
 import static d2g.vetclinicwebproject.config.Constant.PHONE_NUMBER_VALIDATE;
 
 @Service
@@ -20,8 +19,7 @@ public class UserServiceValidationImpl implements UserServiceValidation {
 
     @Override
     public boolean isValidUpdateInfo(UserServiceModel model) {
-        return isEmailValid(model) &&
-                isNameLengthValid(model.getName()) &&
+        return isNameLengthValid(model.getName()) &&
                 isPhoneNumberValid(model.getPhoneNumber());
     }
 
@@ -31,10 +29,6 @@ public class UserServiceValidationImpl implements UserServiceValidation {
 
     private boolean isPasswordValid(String password) {
         return !password.isEmpty();
-    }
-
-    private boolean isEmailValid(UserServiceModel model) {
-        return isMatches(model.getEmail(), EMAIL_VALIDATE);
     }
 
     private boolean isPhoneNumberValid(String phoneNumber) {

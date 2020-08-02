@@ -12,16 +12,24 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
 
 @Service
 @Getter
 @Setter
 @AllArgsConstructor
 public class UserEntityServiceImpl implements UserEntityService {
+    private static final Logger logger = LoggerFactory.getLogger(UserEntityServiceImpl.class);
+
     private final UserRepository userRepository;
     private final AuthorityService authorityService;
     private final GuestService guestService;
@@ -49,7 +57,38 @@ public class UserEntityServiceImpl implements UserEntityService {
 
         userRepository.saveAndFlush(user);
 
-        guestService.registerUser(modelMapper.map(user, GuestServiceModel.class));
+        registerGuestUser(user);
     }
 
+    @Override
+    public UserEntity getOrCreateUser(String email) {
+        Objects.requireNonNull(email);
+
+        Optional<UserEntity> userEntityOptional = userRepository.findByUsername(email);
+
+        return userEntityOptional.orElseGet(() -> createUser(email));
+    }
+
+    private UserEntity createUser(String email) {
+        LOGGER.info("Creating a new user with email [GDPR]");
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(email);
+
+        AuthorityEntity userRole = new AuthorityEntity();
+        userRole.setName("ROLE_USER");
+        userRole.setUser(userEntity);
+        userEntity.setEnabled(true);
+
+        userEntity.setAuthorities(List.of(userRole));
+
+        registerGuestUser(userEntity);
+
+        userRepository.saveAndFlush(userEntity);
+
+        return userEntity;
+    }
+
+    private void registerGuestUser(UserEntity user) {
+        guestService.registerUser(modelMapper.map(user, GuestServiceModel.class));
+    }
 }

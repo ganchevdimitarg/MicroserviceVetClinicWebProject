@@ -19,16 +19,18 @@
             <div class="col-md-6"></div>
             <div class="col-md-6">
                 <button class="col-md-3 btn btn-primary" id="hiding-update-info">Update Info</button>
-                <form id="hide-update-input" th:method="post" th:action="@{/user/api/update-info}"
+                <form id="hide-update-input" th:method="pach" th:action="@{/user/api/update-info}"
                       name="update-user"
-                      target="_self">
+                      target="_self"
+                      enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="name"><i class="zmdi zmdi-email"></i></label>
-                        <input type="name" name="name" id="name" placeholder="Ivan"/>
+                        <label for="photo"><i class="zmdi zmdi-image"></i></label>
+                        <span>Choose photo (max size 500x500, 36KB): </span>
+                        <input type="file" name="image" id="photo"/>
                     </div>
                     <div class="form-group">
-                        <label for="email"><i class="zmdi zmdi-email"></i></label>
-                        <input type="email" name="email" id="email" placeholder="Your Email - lorem@abv.bg"/>
+                        <label for="name"><i class="zmdi zmdi-email"></i></label>
+                        <input type="text" name="name" id="name" placeholder="Ivan"/>
                     </div>
                     <div class="form-group">
                         <label for="address"><i

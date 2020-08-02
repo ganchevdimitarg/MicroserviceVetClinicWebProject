@@ -147,124 +147,24 @@ $(function () {
             remember: {
                 required: true
             },
-            logInKey: {
-                required: true,
-                minlength: 6
-            }
         },
         // Specify validation error messages
         messages: {
             username: {
                 required: "Please enter your username.",
                 minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long"
+                maxlength: "Your password must be at maximum 40 characters long",
+                pattern: "^[\\w!#$%&’*+\\=?`{|}~^-]+(?:\\.[\\w!#$%&’*+\\=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"
             },
             password: {
                 required: "Please provide a password",
                 minlength: "Your password must be at least 6 characters long"
             },
-            logInKey: {
-                required: "Please provide a key",
-                minlength: "Your password must be at least 6 characters long"
-            }
         },
         // Make sure the form is submitted to the destination defined
         // in the "action" attribute of the form when valid
         submitHandler: function (form) {
             form.submit();
-        }
-    });
-});
-
-//validation sing up doctor form
-$(function () {
-    // Initialize form validation on the registration form.
-    // It has the name attribute "registration"
-    $("form[name='register-form-doctor']").validate({
-        // Specify validation rules
-        rules: {
-            // The key name on the left side is the name attribute
-            // of an input field. Validation rules are defined
-            // on the right side
-            username: {
-                required: true,
-                minlength: 3,
-                maxlength: 20
-            },
-            password: {
-                required: true,
-                minlength: 6
-            },
-            confirmPassword: {
-                required: true,
-                minlength: 6
-            },
-            name: {
-                required: true,
-                minlength: 3,
-                maxlength: 20
-            },
-            specialization: {
-                required: true,
-                minlength: 3,
-                maxlength: 20
-            },
-            description: {
-                required: true,
-                minlength: 3,
-                maxlength: 20
-            },
-            logInKey: {
-                required: true,
-                minlength: 6
-            }
-        },
-        // Specify validation error messages
-        messages: {
-            username: {
-                required: "Please enter your username.",
-                minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long"
-            },
-            password: {
-                required: "Please provide a password",
-                minlength: "Your password must be at least 6 characters long - at least one letter and one digit"
-            },
-            confirmPassword: {
-                required: "Please provide a confirmation password",
-                minlength: "Your password must be at least 6 characters long - at least one letter and one digit"
-            },
-            name: {
-                required: "Please enter your name.",
-                minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long"
-            },
-            specialization: {
-                required: "Please enter your specialization.",
-                minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long"
-            },
-            description: {
-                required: "Please enter your description.",
-                minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long"
-            },
-            logInKey: {
-                required: "Please provide a key",
-                minlength: "Your password must be at least 6 characters long"
-            }
-        },
-        // Make sure the form is submitted to the destination defined
-        // in the "action" attribute of the form when valid
-        submitHandler: function (form) {
-            form.submit();
-        }
-    });
-    $("#confirmPassword").keyup(function () {
-        if ($("#password").val() !== $("#confirmPassword").val()) {
-            $("#msg").html("Password do not match").css("color", "red");
-        } else {
-            $("#msg").html("Password matched").css("color", "green");
         }
     });
 });
@@ -282,7 +182,7 @@ $(function () {
             username: {
                 required: true,
                 minlength: 3,
-                maxlength: 20
+                maxlength: 40
             },
             password: {
                 required: true,
@@ -291,34 +191,14 @@ $(function () {
             confirmPassword: {
                 required: true,
                 minlength: 6
-            },
-            name: {
-                required: true,
-                minlength: 3,
-                maxlength: 20
-            },
-            email: {
-                required: true,
-                minlength: 10,
-                maxlength: 30
-            },
-            address: {
-                required: true,
-                minlength: 3,
-                maxlength: 30
-            },
-            phoneNumber: {
-                required: true,
-                minlength: 6,
-                maxlength: 20
             }
         },
         // Specify validation error messages
         messages: {
             username: {
-                required: "Please enter your username.",
+                required: "Please enter your EMAIL.",
                 minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long"
+                maxlength: "Your password must be at maximum 40 characters long"
             },
             password: {
                 required: "Please provide a password",
@@ -327,26 +207,6 @@ $(function () {
             confirmPassword: {
                 required: "Please provide a confirmation password",
                 minlength: "Your password must be at least 6 characters long - at least one letter and one digit"
-            },
-            name: {
-                required: "Please enter your name.",
-                minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long"
-            },
-            email: {
-                required: "Please enter your email.",
-                minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long",
-            },
-            address: {
-                required: "Please enter your address.",
-                minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long"
-            },
-            phoneNumber: {
-                required: "Please enter your phone number.",
-                minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long"
             }
         },
         // Make sure the form is submitted to the destination defined
@@ -424,10 +284,13 @@ $(function () {
             // The key name on the left side is the name attribute
             // of an input field. Validation rules are defined
             // on the right side
-            email: {
+            image: {
                 required: true,
-                minlength: 10,
-                maxlength: 30,
+            },
+            name: {
+                required: true,
+                minlength: 3,
+                maxlength: 20
             },
             address: {
                 required: true,
@@ -442,10 +305,13 @@ $(function () {
         },
         // Specify validation error messages
         messages: {
-            email: {
-                required: "Please enter your email.",
+            image: {
+                required: "Please enter your image.",
+            },
+            name: {
+                required: "Please enter your name.",
                 minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 20 characters long",
+                maxlength: "Your password must be at maximum 20 characters long"
             },
             address: {
                 required: "Please enter your address.",
@@ -935,11 +801,11 @@ jQuery(document).ready(function ($) {
 
 })(jQuery); // End of use strict
 
-$(document).ready(function(){
-    $("#update").click(function(){
+$(document).ready(function () {
+    $("#update").click(function () {
         $("#hide-update-input").hide();
     });
-    $("#hiding-update-info").click(function(){
+    $("#hiding-update-info").click(function () {
         $("#hide-update-input").show();
     });
 });

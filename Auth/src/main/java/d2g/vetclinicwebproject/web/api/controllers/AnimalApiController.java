@@ -33,6 +33,7 @@ public class AnimalApiController {
     private final ModelMapper modelMapper;
     private final AnimalService animalService;
 
+
     @GetMapping("/pet")
     public ResponseEntity<List<AnimalApiControllerModel>> getUserAnimals(@AuthenticationPrincipal Principal principal) {
         List<AnimalApiControllerModel> animals = animalService.getUserAnimals(principal.getName());

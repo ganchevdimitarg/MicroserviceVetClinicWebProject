@@ -1,6 +1,7 @@
 package d2g.vetclinicwebproject.web.api.controllers;
 
 import d2g.vetclinicwebproject.services.models.GuestServiceModel;
+import d2g.vetclinicwebproject.services.services.CloudinaryService;
 import d2g.vetclinicwebproject.services.services.GuestService;
 import d2g.vetclinicwebproject.web.api.models.guest.GuestApiControllerModel;
 import d2g.vetclinicwebproject.web.api.models.guest.GuestUpdateApiControllerModel;
@@ -35,6 +36,7 @@ public class GuestApiController {
 
     private final ModelMapper modelMapper;
     private final GuestService guestService;
+    private final CloudinaryService cloudinaryService;
 
     @GetMapping("/user-home")
     public ResponseEntity<GuestViewApiControllerModel> getUserHome(@AuthenticationPrincipal Principal principal) {
@@ -69,9 +71,14 @@ public class GuestApiController {
     }
 
     @PostMapping("/update-info")
-    public ResponseEntity<GuestServiceModel> update(@AuthenticationPrincipal Principal principal, @Valid @ModelAttribute("updateUser") GuestUpdateApiControllerModel user) {
+    public ResponseEntity<GuestServiceModel> update(@AuthenticationPrincipal Principal principal, @Valid @ModelAttribute("updateUser") GuestUpdateApiControllerModel user, BindingResult bindingResult) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        }
         user.setUsername(principal.getName());
-        guestService.update(modelMapper.map(user, GuestServiceModel.class));
+        GuestServiceModel userModel = modelMapper.map(user, GuestServiceModel.class);
+        userModel.setImageUrl(cloudinaryService.upload(user.getImage()));
+        guestService.update(userModel);
 
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, USER_HOME_PAGE).build();
     }

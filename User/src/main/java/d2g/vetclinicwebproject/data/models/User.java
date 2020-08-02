@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -25,24 +26,22 @@ import static d2g.vetclinicwebproject.config.Constant.*;
 public class User extends BaseEntity implements Serializable {
     @Column(nullable = false, unique = true)
     @NotEmpty
-    @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)
+    @Size(min = 3, max = 40, message = INVALID_TEXT_LENGTH_MASSAGE)
     private String username;
-    @Column(nullable = false, unique = true)
-    @NotEmpty
+    @Column(unique = true)
 //    @Pattern(regexp = PASSWORD_VALIDATE)
     private String password;
-    @Column(columnDefinition = "")
-    @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)
+    @Column
+    @Nullable
+//    @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)
     private String name;
-    @Column(unique = true, columnDefinition = "")
-    @Email
-    @Pattern(regexp = EMAIL_VALIDATE)
-    private String email;
-    @Column(columnDefinition = "")
     private String address;
-    @Column(name = "phone_number", columnDefinition = "")
-    @Pattern(regexp = PHONE_NUMBER_VALIDATE)
+    @Column(name = "phone_number")
+    @Nullable
+//    @Pattern(regexp = PHONE_NUMBER_VALIDATE, message = INVALID_PHONE_NUMBER)
     private String phoneNumber;
+    @Column(name = "photos")
+    private String imageUrl;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Animal> animals;
 }

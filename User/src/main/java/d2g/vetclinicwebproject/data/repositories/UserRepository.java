@@ -12,14 +12,12 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findById(String id);
 
-    Optional<User> findByUsernameAndPassword(String username, String password);
-
     Optional<User> findByUsername(String username);
 
     @Transactional
     @Modifying
-    @Query("update User u set u.name= :name, u.email= :email, u.address= :address, u.phoneNumber= :phoneNumber where u.username= :username")
-    void update(@Param("name") String name, @Param("email") String email, @Param("address") String address, @Param("phoneNumber") String phoneNumber, @Param("username") String username);
+    @Query("update User u set u.name= :name, u.address= :address, u.phoneNumber= :phoneNumber, u.imageUrl= :imageUrl  where u.username= :username")
+    void update(@Param("name") String name, @Param("address") String address, @Param("phoneNumber") String phoneNumber, @Param("imageUrl") String imageUrl, @Param("username") String username);
 
     @Transactional
     @Modifying

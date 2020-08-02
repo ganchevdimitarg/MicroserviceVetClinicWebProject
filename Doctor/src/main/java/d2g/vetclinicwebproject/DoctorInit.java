@@ -15,7 +15,7 @@ public class DoctorInit implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if (doctorRepository.findByUsername("strange") == null) {
+        if (doctorRepository.findByUsername("strange@gmail.com") == null) {
             createDoctorProfile();
         }
     }
@@ -23,7 +23,7 @@ public class DoctorInit implements CommandLineRunner {
     private void createDoctorProfile() {
         Doctor doctor = new Doctor();
 
-        doctor.setUsername("strange");
+        doctor.setUsername("strange@gmail.com");
         doctor.setName("Strange");
         doctor.setDescription("vet");
         doctor.setSpecialization("docs");

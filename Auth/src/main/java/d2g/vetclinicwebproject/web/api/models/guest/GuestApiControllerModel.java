@@ -12,7 +12,6 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class GuestApiControllerModel {
     @NotEmpty
-
     private String username;
     @NotEmpty
     private String password;

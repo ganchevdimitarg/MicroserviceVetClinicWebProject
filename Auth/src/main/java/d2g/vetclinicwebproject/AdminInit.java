@@ -21,14 +21,14 @@ public class AdminInit implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if (userRepository.findByUsername("strange").isEmpty()) {
+        if (userRepository.findByUsername("strange@gmail.com").isEmpty()) {
             createUserDoctor();
         }
     }
 
     private void createUserDoctor() {
         UserEntity admin = new UserEntity();
-        admin.setUsername("strange");
+        admin.setUsername("strange@gmail.com");
         admin.setPassword(passwordEncoder.encode("!1Qazx"));
         admin.setEnabled(true);
 

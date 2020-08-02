@@ -2,14 +2,15 @@ const URLS = {
     items: '/user/api/user-home',
 };
 
-const toString = ({id, name, email, address, phoneNumber}) => {
+const toString = ({id, name, address, phoneNumber, imageUrl}) => {
     let columns = `
             <div class="col-md-6">
-                <img src="https://adayinthelifeimages.com/wp-content/uploads/2016/05/brisbane-headshots-commercial-photography-09.jpg" alt="">
+                <div>
+                    <img src="${imageUrl}" alt="user-image" >
+                </div>
             </div>
             <div class="col-md-6" id="item">
                 <h4>Name: ${name}</h4>
-                <h4>Email: ${email}</h4>
                 <h4>Address: ${address}</h4>
                 <h4>PhoneNumber: ${phoneNumber}</h4>
                 <div class="container">

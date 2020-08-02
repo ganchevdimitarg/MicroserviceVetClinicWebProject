@@ -14,12 +14,11 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column
@@ -27,5 +26,6 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<AuthorityEntity> authorities = new ArrayList<>();
+
 
 }

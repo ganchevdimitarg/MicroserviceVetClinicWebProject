@@ -28,7 +28,6 @@ public class Doctor extends BaseEntity implements Serializable {
     private String username;
     @Column(unique = true)
     @Pattern(regexp = PASSWORD_VALIDATE)
-//    @NotEmpty
     private String password;
     @Column(nullable = false, unique = true)
     @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)

@@ -6,24 +6,24 @@
 <body>
 <span th:replace="fragments/header :: header"></span>
 <main>
-    <form th:method="post" th:action="@{/register}">
+    <form th:method="post" th:action="@{/register}" name="register-form-user">
         <div class="register-form">
             <div class="row justify-content-md-center">
                 <label class="col-md-auto">
-                    Username:
+                    Email:
                     <input type="text" class="register-input" name="username">
                 </label>
             </div>
             <div class="row justify-content-md-center">
                 <label class="col-md-auto">
                     Password:
-                    <input type="password" class="register-input" name="password">
+                    <input type="password" class="register-input" name="password" id="password-user">
                 </label>
             </div>
             <div class="row justify-content-md-center">
                 <label class="col-md-auto">
                     ConfirmPassword:
-                    <input type="password" class="register-input" name="confirmPassword">
+                    <input type="password" class="register-input" name="confirmPassword" id="confirmPassword-user">
                 </label>
             </div>
             <div class="row justify-content-md-center">

@@ -26,4 +26,5 @@ public class UserUpdateApiControllerModel {
     @Pattern(regexp = PHONE_NUMBER_VALIDATE)
     @NotEmpty
     private String phoneNumber;
+    private String imageUrl;
 }

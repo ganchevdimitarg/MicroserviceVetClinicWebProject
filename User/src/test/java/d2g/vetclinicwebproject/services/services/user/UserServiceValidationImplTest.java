@@ -14,8 +14,8 @@ class UserServiceValidationImplTest extends TestBase {
 
     @Test
     void isValidUserRegister_whenUserParasIsValid_shouldReturnTrue() {
-        UserServiceModel user = new UserServiceModel("1", "Ivan", "ivan@abv.bg", "Varna, Republica", "0888888888");
-        user.setUsername("ivan");
+        UserServiceModel user = new UserServiceModel("1", "ivan@abv.bg", "Varna, Republica", "0888888888", "");
+        user.setUsername("ivan@abv.bg");
         user.setPassword("111111");
 
         assertTrue(validation.isValidUserRegister(user));
@@ -33,7 +33,7 @@ class UserServiceValidationImplTest extends TestBase {
     @Test
     void isValidUserRegister_whenUsernameIsMoreThanMaxSize_shouldReturnFalse() {
         UserServiceModel user = new UserServiceModel();
-        user.setUsername("ivdasdasdasdsadadasdsa");
+        user.setUsername("ivdasdasdasdsadaddasdasasdsa");
         user.setPassword("111111");
 
         assertFalse(validation.isValidUserRegister(user));
@@ -51,7 +51,7 @@ class UserServiceValidationImplTest extends TestBase {
     @Test
     void isValidUserRegister_whenPasswordLack_shouldReturnFalse() {
         UserServiceModel user = new UserServiceModel();
-        user.setUsername("ivan");
+        user.setUsername("ivan@abv.bg");
         user.setPassword("");
 
         assertFalse(validation.isValidUserRegister(user));
@@ -59,35 +59,28 @@ class UserServiceValidationImplTest extends TestBase {
 
     @Test
     void isValidUpdateInf_whenIsValid_shouldReturnTrue() {
-        UserServiceModel user = new UserServiceModel("1", "Ivan", "ivan@abv.bg", "Varna, Republica", "0888888888");
+        UserServiceModel user = new UserServiceModel("1", "ivan@abv.bg", "Varna, Republica", "0888888888", "");
 
         assertTrue(validation.isValidUpdateInfo(user));
     }
 
     @Test
     void isValidUpdateInf_whenNameIsLessThanThreeLetters_shouldReturnFalse() {
-        UserServiceModel user = new UserServiceModel("1", "Iv", "ivan@abv.bg", "Varna, Republica", "0888888888");
+        UserServiceModel user = new UserServiceModel("1", "", "Varna, Republica", "0888888888", "");
 
         assertFalse(validation.isValidUpdateInfo(user));
     }
 
     @Test
     void isValidUpdateInf_whenNameIsMoreThanTwentyLetters_shouldReturnFalse() {
-        UserServiceModel user = new UserServiceModel("1", "Ivdsadsadasddsaddasdsaddasdasdda", "ivan@abv.bg", "Varna, Republica", "0888888888");
-
-        assertFalse(validation.isValidUpdateInfo(user));
-    }
-
-    @Test
-    void isValidUpdateInf_whenEmailNotMatch_shouldReturnFalse() {
-        UserServiceModel user = new UserServiceModel("1", "Ivan", "ivan@abv", "Varna, Republica", "0888888888");
+        UserServiceModel user = new UserServiceModel("1", "ivadasdasdasdsadn@abv.bdasdasdasdasdsg", "Varna, Republica", "0888888888", "");
 
         assertFalse(validation.isValidUpdateInfo(user));
     }
 
     @Test
     void isValidUpdateInf_whenPhoneNumberNotMatch_shouldReturnFalse() {
-        UserServiceModel user = new UserServiceModel("1", "Ivan", "ivan@abv", "Varna, Republica", "08888888");
+        UserServiceModel user = new UserServiceModel("1", "ivan@abv", "Varna, Republica", "08888888", "");
 
         assertFalse(validation.isValidUpdateInfo(user));
     }

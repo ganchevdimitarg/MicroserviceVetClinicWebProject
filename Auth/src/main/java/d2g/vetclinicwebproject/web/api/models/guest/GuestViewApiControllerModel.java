@@ -12,7 +12,7 @@ import lombok.Setter;
 public class GuestViewApiControllerModel {
     private String id;
     private String name;
-    private String email;
     private String address;
     private String phoneNumber;
+    private String imageUrl;
 }
