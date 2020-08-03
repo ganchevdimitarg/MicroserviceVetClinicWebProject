@@ -1,9 +1,12 @@
 package d2g.vetclinicwebproject.config;
 
+import d2g.vetclinicwebproject.data.repository.StatsRepository;
+import d2g.vetclinicwebproject.handler.StatsLogoutSuccessHandler;
 import d2g.vetclinicwebproject.services.OAuth2UserAuthSuccessHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -22,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
     private final OAuth2UserAuthSuccessHandler oAuth2UserAuthSuccessHandler;
+    private final StatsRepository statsRepository;
 
 
     @Autowired
@@ -51,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/sign-in?logout")
+                    .logoutSuccessHandler(logoutSuccessHandler())
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
                 .and()
@@ -58,6 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .successHandler(oAuth2UserAuthSuccessHandler);
 
+    }
+
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new StatsLogoutSuccessHandler(statsRepository);
     }
 }
 
