@@ -172,7 +172,6 @@
           <element id="library" level="project" name="Maven: org.springframework.cloud:spring-cloud-starter-loadbalancer:2.2.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.cloud:spring-cloud-loadbalancer:2.2.1.RELEASE" />
           <element id="library" level="project" name="Maven: io.projectreactor.addons:reactor-extra:3.3.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-cache:2.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: com.stoyanr:evictor:1.0.0" />
           <element id="library" level="project" name="Maven: com.netflix.ribbon:ribbon-eureka:2.3.0" />
           <element id="library" level="project" name="Maven: com.thoughtworks.xstream:xstream:1.4.11.1" />
@@ -220,6 +219,7 @@
           <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" />
           <element id="library" level="project" name="Maven: junit:junit:4.12" />
           <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:2.1" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-cache:2.2.5.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">

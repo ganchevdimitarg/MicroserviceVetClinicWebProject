@@ -1,4 +1,4 @@
-package d2g.vetclinicwebproject.services;
+package d2g.vetclinicwebproject.handler;
 
 import d2g.vetclinicwebproject.data.model.UserEntity;
 import d2g.vetclinicwebproject.services.services.UserEntityService;

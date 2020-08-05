@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DoctorApiController {
 
-    private final static Logger logger = LoggerFactory.getLogger(DoctorApiController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(DoctorApiController.class);
 
     private static final String SCHEDULE_PAGE = "/doctor/schedule";
     private static final String MEDICINE_PAGE = "/doctor/medicine";

@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ import java.security.Principal;
 @AllArgsConstructor
 public class GuestApiController {
 
-    private final static Logger logger = LoggerFactory.getLogger(GuestApiController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(GuestApiController.class);
 
     public static final String SIGN_UP_PAGE = "auth/sign-up-user";
     public static final String SIGN_IN_PAGE = "/sign-in";
@@ -39,7 +40,7 @@ public class GuestApiController {
     private final CloudinaryService cloudinaryService;
 
     @GetMapping("/user-home")
-    public ResponseEntity<GuestViewApiControllerModel> getUserHome(@AuthenticationPrincipal Principal principal) throws InterruptedException {
+    public ResponseEntity<GuestViewApiControllerModel> getUserHome(@AuthenticationPrincipal Principal principal) {
         GuestViewApiControllerModel user = modelMapper.map(guestService.getUserHome(principal.getName()), GuestViewApiControllerModel.class);
 
         if (user != null){

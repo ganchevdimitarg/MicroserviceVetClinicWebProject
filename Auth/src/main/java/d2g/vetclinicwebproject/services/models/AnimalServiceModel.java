@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddAnimalServiceModel {
+public class AnimalServiceModel {
     private String id;
     private String breed;
     private String name;

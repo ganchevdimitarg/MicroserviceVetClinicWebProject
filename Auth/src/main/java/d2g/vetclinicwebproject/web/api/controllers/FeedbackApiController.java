@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class FeedbackApiController {
 
-    private final static Logger logger = LoggerFactory.getLogger(FeedbackApiController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(FeedbackApiController.class);
 
     private static final String FEEDBACK_PAGE = "/contact";
 

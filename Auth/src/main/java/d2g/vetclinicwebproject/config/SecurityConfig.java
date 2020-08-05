@@ -2,7 +2,7 @@ package d2g.vetclinicwebproject.config;
 
 import d2g.vetclinicwebproject.data.repository.StatsRepository;
 import d2g.vetclinicwebproject.handler.StatsLogoutSuccessHandler;
-import d2g.vetclinicwebproject.services.OAuth2UserAuthSuccessHandler;
+import d2g.vetclinicwebproject.handler.OAuth2UserAuthSuccessHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/", "/sign-in", "/register", "/about", "/contact").anonymous()
+                .antMatchers("/", "/sign-in", "/register", "/about", "/contact", "/login-error").anonymous()
                 .antMatchers("/**")
                 .authenticated()
                 .and()

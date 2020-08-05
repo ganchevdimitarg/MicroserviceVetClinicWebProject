@@ -37,7 +37,7 @@ public class AuthController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("error", "bad.credentials");
         modelAndView.addObject("username", email);
-        modelAndView.setViewName("login/login");
+        modelAndView.setViewName("auth/sign-in");
 
         return modelAndView;
     }
