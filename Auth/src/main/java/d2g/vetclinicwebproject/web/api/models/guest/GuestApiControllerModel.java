@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 public class GuestApiControllerModel {
+    @Email
     @NotEmpty
     private String username;
     @NotEmpty

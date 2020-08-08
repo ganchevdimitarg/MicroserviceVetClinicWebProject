@@ -49,15 +49,6 @@ class UserServiceValidationImplTest extends TestBase {
     }
 
     @Test
-    void isValidUserRegister_whenPasswordLack_shouldReturnFalse() {
-        UserServiceModel user = new UserServiceModel();
-        user.setUsername("ivan@abv.bg");
-        user.setPassword("");
-
-        assertFalse(validation.isValidUserRegister(user));
-    }
-
-    @Test
     void isValidUpdateInf_whenIsValid_shouldReturnTrue() {
         UserServiceModel user = new UserServiceModel("1", "ivan@abv.bg", "Varna, Republica", "0888888888", "");
 

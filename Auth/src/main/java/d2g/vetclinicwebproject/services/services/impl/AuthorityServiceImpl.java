@@ -20,7 +20,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Override
     public AuthorityServiceModel createUserRole(UserServiceModel user) {
         AuthorityEntity authorityEntity = new AuthorityEntity();
-        authorityEntity.setName("ROLE_USER");
+        authorityEntity.setRole("ROLE_USER");
         authorityEntity.setUser(modelMapper.map(user, UserEntity.class));
         authorityRepository.saveAndFlush(authorityEntity);
 

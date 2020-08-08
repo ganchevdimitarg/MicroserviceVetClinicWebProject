@@ -29,10 +29,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(UserServiceModel model) throws IllegalAccessException {
-//        if(!validation.isValidUserRegister(model)){
-//            LOGGER.error(INVALID_PARAMS);
-//            throw new IllegalAccessException(INVALID_PARAMS);
-//        }
+        if(!validation.isValidUserRegister(model)){
+            LOGGER.error(INVALID_PARAMS);
+            throw new IllegalAccessException(INVALID_PARAMS);
+        }
         model.setName("-");
         model.setPhoneNumber("-");
         model.setAddress("-");
@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String username) {
         User user = getUserByUsername(username);
+
         user.getAnimals().removeAll(user.getAnimals());
         animalRepository.deleteAnimalsByUser(user);
         userRepository.deleteByUsername(username);
@@ -63,6 +64,6 @@ public class UserServiceImpl implements UserService {
 
     private User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException(NO_SUCH_USER));
+                .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_USER));
     }
 }

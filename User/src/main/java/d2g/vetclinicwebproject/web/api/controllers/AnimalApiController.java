@@ -22,11 +22,11 @@ public class AnimalApiController {
     private final AnimalService animalService;
 
     @GetMapping("/animals/{username}")
-    public ResponseEntity<List<AnimalApiControllerModel>> getAnimals(@PathVariable String username) {
-        List<AnimalApiControllerModel> animals = animalService.getCurrentUserAnimal(username)
+    public ResponseEntity<List<AnimalServiceModel>> getAnimals(@PathVariable String username) {
+        List<AnimalServiceModel> animals = animalService.getCurrentUserAnimal(username)
                 .stream()
                 .map(s -> {
-                    AnimalApiControllerModel animal = new AnimalApiControllerModel();
+                    AnimalServiceModel animal = new AnimalServiceModel();
                     animal.setId(s.getId());
                     animal.setName(s.getName());
                     animal.setBreed(s.getBreed());
@@ -77,14 +77,14 @@ public class AnimalApiController {
         return ResponseEntity.ok().build();
     }
 
-    private void setMedicine(AnimalServiceModel s, AnimalApiControllerModel animal) {
+    private void setMedicine(AnimalServiceModel s, AnimalServiceModel animal) {
         animal.setMedicine("-");
         if (s.getMedicine() != null){
             animal.setMedicine(s.getMedicine());
         }
     }
 
-    private void setDisease(AnimalServiceModel s, AnimalApiControllerModel animal) {
+    private void setDisease(AnimalServiceModel s, AnimalServiceModel animal) {
         animal.setDisease("-");
         if (s.getDisease() != null){
             animal.setDisease(s.getDisease());

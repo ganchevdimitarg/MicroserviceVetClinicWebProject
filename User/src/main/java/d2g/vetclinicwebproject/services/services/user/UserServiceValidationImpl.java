@@ -14,7 +14,7 @@ public class UserServiceValidationImpl implements UserServiceValidation {
 
     @Override
     public boolean isValidUserRegister(UserServiceModel model) {
-        return isUsernameValid(model.getUsername()) && isPasswordValid(model.getPassword());
+        return isUsernameValid(model.getUsername());
     }
 
     @Override
@@ -27,17 +27,13 @@ public class UserServiceValidationImpl implements UserServiceValidation {
         return !username.isEmpty() && isNameLengthValid(username);
     }
 
-    private boolean isPasswordValid(String password) {
-        return !password.isEmpty();
-    }
-
     private boolean isPhoneNumberValid(String phoneNumber) {
         return isMatches(phoneNumber, PHONE_NUMBER_VALIDATE);
     }
 
 
     private boolean isNameLengthValid(String name) {
-        return name.length() >= 3 && name.length() <= 20;
+        return name.length() >= 3 && name.length() <= 50;
     }
 
     private boolean isMatches(String model, String regex) {

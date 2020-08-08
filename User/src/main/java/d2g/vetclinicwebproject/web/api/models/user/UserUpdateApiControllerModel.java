@@ -4,10 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import static d2g.vetclinicwebproject.config.Constant.EMAIL_VALIDATE;
 import static d2g.vetclinicwebproject.config.Constant.PHONE_NUMBER_VALIDATE;
 
 @Getter
@@ -18,7 +18,7 @@ public class UserUpdateApiControllerModel {
     private String username;
     @NotEmpty
     private String name;
-    @Pattern(regexp = EMAIL_VALIDATE)
+    @Email
     @NotEmpty
     private String email;
     @NotEmpty

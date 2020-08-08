@@ -17,6 +17,7 @@ const toString = ({id, name, specialization, description}) => {
     return `<div class="row">${columns}</div>`
 };
 
+$('#loader-page').show();
 fetch(URLS.items)
     .then(response => response.json())
     .then(item => {
@@ -27,4 +28,3 @@ fetch(URLS.items)
         $('#loader-page').hide()
         $('#campd').append(result);
     });
-$('#loader-page').hide()

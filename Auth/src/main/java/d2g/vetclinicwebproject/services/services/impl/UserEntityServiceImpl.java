@@ -50,7 +50,7 @@ public class UserEntityServiceImpl implements UserEntityService {
         user.setEnabled(true);
 
         AuthorityEntity adminAdminAuthorityEntity = new AuthorityEntity();
-        adminAdminAuthorityEntity.setName("ROLE_USER");
+        adminAdminAuthorityEntity.setRole("ROLE_USER");
         adminAdminAuthorityEntity.setUser(user);
 
         user.setAuthorities(List.of(adminAdminAuthorityEntity));
@@ -75,7 +75,7 @@ public class UserEntityServiceImpl implements UserEntityService {
         userEntity.setUsername(email);
 
         AuthorityEntity userRole = new AuthorityEntity();
-        userRole.setName("ROLE_USER");
+        userRole.setRole("ROLE_USER");
         userRole.setUser(userEntity);
         userEntity.setEnabled(true);
 

@@ -26,7 +26,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void save(ScheduleServiceModel model, String id) {
         Doctor doctor = doctorRepository.findByName(model.getDoctor());
-        if (!validation.isValidSchedule(model) && doctor == null) {
+        if (!validation.isValidSchedule(model) || doctor == null) {
             throw new IllegalArgumentException(INCORRECT_DATE);
         }
 

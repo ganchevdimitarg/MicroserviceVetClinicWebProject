@@ -18,12 +18,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Medicine extends BaseEntity implements Serializable {
-    @Column(nullable = false, unique = true)
+    @Column(name = "name",nullable = false, unique = true)
     @NotNull
     @NotEmpty
     private String name;
-    @Column(nullable = false)
+    @Column(name = "description", nullable = false)
     @NotNull
     @NotEmpty
     private String description;
+    @Column(name = "photo")
+    private String imageUrl;
 }

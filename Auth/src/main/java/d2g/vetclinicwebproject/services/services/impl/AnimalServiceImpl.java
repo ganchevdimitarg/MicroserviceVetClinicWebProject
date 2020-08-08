@@ -6,6 +6,7 @@ import d2g.vetclinicwebproject.web.api.models.animal.AnimalApiControllerModel;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,9 @@ public class AnimalServiceImpl implements AnimalService {
 
     private final RestTemplate restTemplate;
 
-//    @Cacheable("animals")
+
     @Override
     public List<AnimalServiceModel> getUserAnimals(String username) {
-//        LOGGER.info("Cache animals....");
         return restTemplate.exchange(URL_TO_USER_SERVICE + "animals/" + username,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<AnimalServiceModel>>() {
                 }).getBody();

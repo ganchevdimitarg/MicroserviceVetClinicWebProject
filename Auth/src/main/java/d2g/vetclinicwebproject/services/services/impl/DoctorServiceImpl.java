@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,26 +23,28 @@ public class DoctorServiceImpl implements DoctorService {
     private static final String MICROSERVICE_DOCTOR_URL = "http://localhost:8083/doctor/";
     private static final String MICROSERVICE_DOCTOR_URL_SCHEDULE = "http://localhost:8083/doctor/schedule";
 
-    private final RestTemplate restTemplate;
     private final ModelMapper modelMapper;
 
-    @HystrixCommand(fallbackMethod = "getFallbackDoctorHomePage",
-            threadPoolProperties = {
-                    @HystrixProperty(name = "coreSize", value = "30"),
-                    @HystrixProperty(name = "maxQueueSize", value = "-1")
-            },
-            threadPoolKey = "doctorHomePage",
+    private final RestTemplate restTemplate;
+    @HystrixCommand(fallbackMethod = "getFallbackDoctorHome",
             commandProperties = {
                     @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
                     @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "2000"),
                     @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "2000")
+            },
+            threadPoolKey = "doctorHomePage",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "30"),
+                    @HystrixProperty(name = "maxQueueSize", value = "-1")
             })
     @Override
     public DoctorServiceModel getDoctorHome(String username) {
-        return restTemplate.exchange(MICROSERVICE_DOCTOR_URL + username,
+        ResponseEntity<DoctorServiceModel> resp = restTemplate.exchange(MICROSERVICE_DOCTOR_URL + username,
                 HttpMethod.GET, null, new ParameterizedTypeReference<DoctorServiceModel>() {
-                }).getBody();
+                });
+
+        return resp.getStatusCode() == HttpStatus.OK ? resp.getBody() : new DoctorServiceModel();
     }
 
     @Override
@@ -80,14 +84,14 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
 
+    public DoctorServiceModel getFallbackDoctorHome(String username) {
+        return new DoctorServiceModel();
+    }
+
     public DoctorServiceModel doctorHomePage(String id, Throwable throwable) {
         System.out.printf("fallback, thread: %s input:%s, exception:%s%n",
                 Thread.currentThread().getName(), id, throwable);
 
-        return new DoctorServiceModel();
-    }
-
-    public DoctorServiceModel getFallbackDoctorHomePage(String id) {
         return new DoctorServiceModel();
     }
 }

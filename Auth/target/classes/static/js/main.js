@@ -1,49 +1,49 @@
-//nav-bar
-$(function () {
-    'use strict';
-
-    function toggle(e) {
-        if (e) e.preventDefault();
-
-        var $this = $(this),
-            $navbar = $this.parents('.navbar'),
-            $item = $this.parent();
-
-        $('.nav-item.active', $navbar).removeClass('active');
-        $item.addClass('active');
-
-        if ($navbar.hasClass('main-nav')) {
-            $('.active', $navbar.siblings('.sub-nav')).removeClass('active');
-            $($item.data('target')).addClass('active');
-        }
-    }
-
-    function leave(e) {
-        var $this = $(this),
-            $navbar = $this.siblings('.main-nav'),
-            $subnav = $('.navbar-nav.active', $this);
-
-        $('[data-target="#' + $subnav.attr('id') + '"]', $navbar).removeClass('hover');
-        $subnav.removeClass('active');
-    };
-
-    function enter(e) {
-        var $this = $(this),
-            $navbar = $this.parents('.navbar');
-
-        $('.nav-item.hover', $navbar).removeClass('hover');
-        $this.addClass('hover');
-
-        if ($navbar.hasClass('main-nav')) {
-            $('.active', $navbar.siblings('.sub-nav')).removeClass('active');
-            $($this.data('target')).addClass('active');
-        }
-    }
-
-    $('.main-nav .nav-link, .sub-nav .nav-link').click(toggle);
-    $('.main-nav .nav-item').mouseenter(enter);
-    $('.sub-nav').mouseleave(leave);
-});
+// //nav-bar
+// $(function () {
+//     'use strict';
+//
+//     function toggle(e) {
+//         if (e) e.preventDefault();
+//
+//         var $this = $(this),
+//             $navbar = $this.parents('.navbar'),
+//             $item = $this.parent();
+//
+//         $('.nav-item.active', $navbar).removeClass('active');
+//         $item.addClass('active');
+//
+//         if ($navbar.hasClass('main-nav')) {
+//             $('.active', $navbar.siblings('.sub-nav')).removeClass('active');
+//             $($item.data('target')).addClass('active');
+//         }
+//     }
+//
+//     function leave(e) {
+//         var $this = $(this),
+//             $navbar = $this.siblings('.main-nav'),
+//             $subnav = $('.navbar-nav.active', $this);
+//
+//         $('[data-target="#' + $subnav.attr('id') + '"]', $navbar).removeClass('hover');
+//         $subnav.removeClass('active');
+//     };
+//
+//     function enter(e) {
+//         var $this = $(this),
+//             $navbar = $this.parents('.navbar');
+//
+//         $('.nav-item.hover', $navbar).removeClass('hover');
+//         $this.addClass('hover');
+//
+//         if ($navbar.hasClass('main-nav')) {
+//             $('.active', $navbar.siblings('.sub-nav')).removeClass('active');
+//             $($this.data('target')).addClass('active');
+//         }
+//     }
+//
+//     $('.main-nav .nav-link, .sub-nav .nav-link').click(toggle);
+//     $('.main-nav .nav-item').mouseenter(enter);
+//     $('.sub-nav').mouseleave(leave);
+// });
 
 // Contact form
 $(document).ready(function () {
@@ -133,13 +133,14 @@ $(function () {
         // Specify validation rules
         rules: {
             // The key name on the left side is the name attribute
-            // of an input field. Validation rules are defined
             // on the right side
             username: {
                 required: true,
                 minlength: 3,
-                maxlength: 20
+                maxlength: 50,
+                pattern: "^[\\w!#$%&’*+\\=?`{|}~^-]+(?:\\.[\\w!#$%&’*+\\=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"
             },
+            // of an input field. Validation rules are defined
             password: {
                 required: true,
                 minlength: 6
@@ -153,12 +154,12 @@ $(function () {
             username: {
                 required: "Please enter your username.",
                 minlength: "Your password must be at least 3 characters long",
-                maxlength: "Your password must be at maximum 40 characters long",
-                pattern: "^[\\w!#$%&’*+\\=?`{|}~^-]+(?:\\.[\\w!#$%&’*+\\=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"
+                maxlength: "Your password must be at maximum 50 characters long"
             },
             password: {
                 required: "Please provide a password",
-                minlength: "Your password must be at least 6 characters long"
+                minlength: "Your password must be at least 6 characters long",
+                pattern: "Minimum six characters, at least one letter and one number"
             },
         },
         // Make sure the form is submitted to the destination defined
@@ -187,6 +188,7 @@ $(function () {
             password: {
                 required: true,
                 minlength: 6,
+                pattern: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$"
             },
             confirmPassword: {
                 required: true,
@@ -332,7 +334,7 @@ $(function () {
     });
 });
 
-//validation add schedule form
+//validation add medicine form
 $(function () {
     // Initialize form validation on the registration form.
     // It has the name attribute "registration"
@@ -344,18 +346,26 @@ $(function () {
             // on the right side
             name: {
                 required: true,
+                minlength: 6,
+                maxlength: 20
             },
             description: {
-                required: true
+                required: true,
+                minlength: 6,
+                maxlength: 100
             }
         },
         // Specify validation error messages
         messages: {
             name: {
                 required: "Please enter name.",
+                minlength: "Your password must be at least 6 characters long",
+                maxlength: "Your password must be at maximum 20 characters long"
             },
             description: {
                 required: "Please enter description.",
+                minlength: "Your password must be at least 6 characters long",
+                maxlength: "Your password must be at maximum 100 characters long"
             }
         },
         // Make sure the form is submitted to the destination defined
@@ -382,10 +392,14 @@ $(function () {
                 maxlength: 18
             },
             doctor: {
-                required: true
+                required: true,
+                minlength: 3,
+                maxlength: 50
             },
             animal: {
-                required: true
+                required: true,
+                minlength: 3,
+                maxlength: 10
             }
         },
         // Specify validation error messages
@@ -395,9 +409,13 @@ $(function () {
             },
             doctor: {
                 required: "Please enter doctor.",
+                minlength: "Your password must be at least 3 characters long",
+                maxlength: "Your password must be at maximum 50 characters long"
             },
             animal: {
                 required: "Please enter animal.",
+                minlength: "Your password must be at least 3 characters long",
+                maxlength: "Your password must be at maximum 10 characters long"
             }
         },
         // Make sure the form is submitted to the destination defined

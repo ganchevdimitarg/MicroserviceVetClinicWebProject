@@ -12,4 +12,5 @@ import lombok.Setter;
 public class MedicineApiControllerModel {
     private String name;
     private String description;
+    private String imageUrl;
 }

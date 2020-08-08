@@ -19,20 +19,22 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Animal extends BaseEntity implements Serializable {
-    @Column(nullable = false)
+    @Column(name = "breed",nullable = false)
     @NotEmpty
     @Size(min = 3, max = 6)
     private String breed;
-    @Column(nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     @NotEmpty
     @Size(min = 3, max = 6)
     private String name;
-    @Column(nullable = false)
+    @Column(name = "age", nullable = false)
     @NotNull
     @Min(value = 0)
     private double age;
+    @Column(name = "disease")
     @Size(min = 3, max = 10)
     private String disease;
+    @Column(name = "medicine")
     @Size(min = 3, max = 10)
     private String medicine;
     @ManyToOne

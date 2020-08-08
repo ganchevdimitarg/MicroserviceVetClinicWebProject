@@ -9,9 +9,11 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@PreAuthorize("hasRole('USER')")
 @RequestMapping("/user/api")
 @AllArgsConstructor
 public class AnimalApiController {
@@ -36,6 +39,7 @@ public class AnimalApiController {
     private final AnimalService animalService;
     private final UpdateCachePublisher publisher;
 
+//    @Cacheable("animals")
     @GetMapping("/pet")
     public ResponseEntity<List<AnimalApiControllerModel>> getUserAnimals(@AuthenticationPrincipal Principal principal) {
         List<AnimalServiceModel> animals = animalService.getUserAnimals(principal.getName());
@@ -43,6 +47,7 @@ public class AnimalApiController {
                 .map(animal -> modelMapper.map(animal, AnimalApiControllerModel.class)).collect(Collectors.toList());
 
         if (animals.size() != 0){
+//            LOGGER.info("Cache animals....");
             return ResponseEntity.ok(animalsModel);
         }
         return ResponseEntity.noContent().build();
@@ -62,7 +67,7 @@ public class AnimalApiController {
 
         animalService.addAnimals(modelMapper.map(animal, AnimalServiceModel.class), principal.getName());
 
-        publisher.publishUpdateCache(principal.getName());
+//        publisher.publishUpdateCache(principal.getName(), modelMapper.map(animal, AnimalServiceModel.class));
 
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, PET_PAGE).build();
     }

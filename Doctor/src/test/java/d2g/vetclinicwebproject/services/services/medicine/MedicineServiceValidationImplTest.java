@@ -13,21 +13,21 @@ class MedicineServiceValidationImplTest extends TestBase {
 
     @Test
     void isMedicineValid_whenMedicineInfoIsValid_shouldReturnTrue() {
-        MedicineServiceModel model = new MedicineServiceModel("migraine", "antibiotic");
+        MedicineServiceModel model = new MedicineServiceModel("migraine", "antibiotic", "");
 
         assertTrue(validation.isMedicineValid(model));
     }
 
     @Test
     void isMedicineValid_whenMedicineNameIsEmpty_shouldReturnFalse() {
-        MedicineServiceModel model = new MedicineServiceModel("", "antibiotic");
+        MedicineServiceModel model = new MedicineServiceModel("", "antibiotic", "");
 
         assertFalse(validation.isMedicineValid(model));
     }
 
     @Test
     void isMedicineValid_whenMedicineDescriptionIsEmpty_shouldReturnFalse() {
-        MedicineServiceModel model = new MedicineServiceModel("migraine", "");
+        MedicineServiceModel model = new MedicineServiceModel("migraine", "", "");
 
         assertFalse(validation.isMedicineValid(model));
     }

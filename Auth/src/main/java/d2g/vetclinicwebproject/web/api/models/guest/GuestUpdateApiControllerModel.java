@@ -9,8 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import static d2g.vetclinicwebproject.config.Constant.EMAIL_VALIDATE;
-import static d2g.vetclinicwebproject.config.Constant.PHONE_NUMBER_VALIDATE;
+import static d2g.vetclinicwebproject.config.Constant.*;
 
 @Getter
 @Setter
@@ -19,7 +18,7 @@ public class GuestUpdateApiControllerModel {
     private String id;
     private String username;
     @NotEmpty
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)
     private String name;
     @NotEmpty
     private String address;

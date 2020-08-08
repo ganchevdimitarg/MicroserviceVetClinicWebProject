@@ -46,7 +46,7 @@ class MedicineServiceImplTest extends TestBase {
     @Test
     void save_whenMedicineInfoIsNotValid_shouldThrowException() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            MedicineServiceModel model = new MedicineServiceModel("", "Gnathostomiasis is a disease from mammal feces and undercooked seafood.");
+            MedicineServiceModel model = new MedicineServiceModel("", "Gnathostomiasis is a disease from mammal feces and undercooked seafood.", "");
             medicineService.save(model);
         });
 
@@ -57,7 +57,7 @@ class MedicineServiceImplTest extends TestBase {
 
     @Test
     void getAll_whenUserSearchMedicines_shouldReturnAllMedicines() {
-        List<Medicine> medicines = List.of(new Medicine("first", "none"), new Medicine("second", "none"));
+        List<Medicine> medicines = List.of(new Medicine("first", "none", ""), new Medicine("second", "none", ""));
 
         Mockito.when(medicineRepository.getAll()).thenReturn(medicines);
 

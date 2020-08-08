@@ -33,7 +33,7 @@ public class AdminInit implements CommandLineRunner {
         admin.setEnabled(true);
 
         AuthorityEntity adminAdminAuthorityEntity = new AuthorityEntity();
-        adminAdminAuthorityEntity.setName("ROLE_ADMIN");
+        adminAdminAuthorityEntity.setRole("ROLE_ADMIN");
         adminAdminAuthorityEntity.setUser(admin);
 
         admin.setAuthorities(List.of(adminAdminAuthorityEntity));

@@ -6,7 +6,7 @@ const toString = ({id, name, address, phoneNumber, imageUrl}) => {
     let columns = `
             <div class="col-md-6">
                 <div>
-                    <img src="${imageUrl}" alt="user-image" >
+                    <img src="${imageUrl}" class="img-pic" alt="user-image" >
                 </div>
             </div>
             <div class="col-md-6" id="item">

@@ -1,5 +1,7 @@
 package d2g.vetclinicwebproject.web.api.controllers;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import d2g.vetclinicwebproject.services.models.GuestServiceModel;
 import d2g.vetclinicwebproject.services.services.CloudinaryService;
 import d2g.vetclinicwebproject.services.services.GuestService;
@@ -14,6 +16,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,7 @@ import java.io.IOException;
 import java.security.Principal;
 
 @RestController
+@PreAuthorize("hasRole('USER')")
 @RequestMapping("/user/api")
 @AllArgsConstructor
 public class GuestApiController {
@@ -39,15 +43,16 @@ public class GuestApiController {
     private final GuestService guestService;
     private final CloudinaryService cloudinaryService;
 
+
     @GetMapping("/user-home")
     public ResponseEntity<GuestViewApiControllerModel> getUserHome(@AuthenticationPrincipal Principal principal) {
         GuestViewApiControllerModel user = modelMapper.map(guestService.getUserHome(principal.getName()), GuestViewApiControllerModel.class);
 
-        if (user != null){
+        if (user.getId() != null){
             return ResponseEntity.ok(user);
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "/sign-in").build();
     }
 
     @ModelAttribute("registerUser")
@@ -89,5 +94,9 @@ public class GuestApiController {
         guestService.deleteUser(principal.getName());
 
         response.sendRedirect("/logout");
+    }
+
+    public ResponseEntity<GuestViewApiControllerModel> getFallbackSingInPage(@AuthenticationPrincipal Principal principal){
+        return ResponseEntity.noContent().build();
     }
 }

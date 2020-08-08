@@ -1329,3 +1329,7 @@ textarea.input1 + .shadow-input1 {
     background-size: 100px;
 }
 
+.img-pic{
+    width: 500px;
+}
+

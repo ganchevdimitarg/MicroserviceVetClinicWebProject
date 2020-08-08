@@ -3,6 +3,7 @@ package d2g.vetclinicwebproject.web.api.controllers;
 import d2g.vetclinicwebproject.services.models.AddScheduleServiceModel;
 import d2g.vetclinicwebproject.services.models.AddTreatmentServiceModel;
 import d2g.vetclinicwebproject.services.models.MedicineServiceModel;
+import d2g.vetclinicwebproject.services.services.CloudinaryService;
 import d2g.vetclinicwebproject.services.services.DoctorService;
 import d2g.vetclinicwebproject.web.api.models.doctor.AddMedicineApiControlModel;
 import d2g.vetclinicwebproject.web.api.models.doctor.DoctorApiControllerModel;
@@ -17,12 +18,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,8 +42,10 @@ public class DoctorApiController {
 
     private final DoctorService doctorService;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
 
     @GetMapping("/doctor-home")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<DoctorApiControllerModel> getDoctorHome(@AuthenticationPrincipal Principal principal) {
         DoctorApiControllerModel doctor = modelMapper.map(doctorService.getDoctorHome(principal.getName()), DoctorApiControllerModel.class);
 
@@ -51,7 +56,9 @@ public class DoctorApiController {
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "/sign-in").build();
     }
 
+
     @GetMapping("/schedule")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ScheduleApiControllerModel>> getSchedule() {
         List<ScheduleApiControllerModel> schedules = doctorService.getSchedule()
                 .stream()
@@ -71,6 +78,7 @@ public class DoctorApiController {
     }
 
     @PostMapping("/schedule")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AddScheduleServiceModel> addSchedule(@Valid @ModelAttribute("addSchedule") AddScheduleApiControllerModel model, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, SCHEDULE_PAGE).build();
@@ -88,6 +96,7 @@ public class DoctorApiController {
     }
 
     @PostMapping("/add-treatment")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AddTreatmentServiceModel> addTreatmentToAnimal(@Valid @ModelAttribute("addTreatment") AddTreatmentApiControllerModel model, HttpSession session) {
         doctorService.addTreatmentToAnimal(modelMapper.map(model, AddTreatmentServiceModel.class), session.getAttribute("scheduleId").toString());
 
@@ -95,6 +104,7 @@ public class DoctorApiController {
     }
 
     @PostMapping("/delete-finished-schedule/{scheduleId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AddScheduleServiceModel> deleteSchedule(@PathVariable String scheduleId, AddScheduleApiControllerModel model) {
         doctorService.deleteSchedule(scheduleId, modelMapper.map(model, AddScheduleServiceModel.class));
 
@@ -102,6 +112,7 @@ public class DoctorApiController {
     }
 
     @GetMapping("/medicines")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<List<MedicineApiControllerModel>> getMedicine() {
         List<MedicineApiControllerModel> medicines = doctorService.getMedicine()
                 .stream()
@@ -121,12 +132,15 @@ public class DoctorApiController {
     }
 
     @PostMapping("/add-medicine")
-    public ResponseEntity<MedicineServiceModel> addMedicine(@Valid @ModelAttribute("addNewMedicine") AddMedicineApiControlModel model, BindingResult bindingResult) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<MedicineServiceModel> addMedicine(@Valid @ModelAttribute("addNewMedicine") AddMedicineApiControlModel model, BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, MEDICINE_PAGE).build();
         }
 
-        doctorService.addMedicine(modelMapper.map(model, MedicineServiceModel.class));
+        MedicineServiceModel medicineModel = modelMapper.map(model, MedicineServiceModel.class);
+        medicineModel.setImageUrl(cloudinaryService.upload(model.getImage()));
+        doctorService.addMedicine(medicineModel);
 
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, MEDICINE_PAGE).build();
     }

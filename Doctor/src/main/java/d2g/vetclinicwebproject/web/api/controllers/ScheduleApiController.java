@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ScheduleApiController {
     private static final String MICROSERVICE_USER_URL = "http://localhost:8082/user/animal/";
-    private static final String NO_SUCH_USER = "No such animal";
 
     private final ScheduleService scheduleService;
     private final RestTemplate restTemplate;
@@ -35,7 +34,7 @@ public class ScheduleApiController {
                 .map(s -> modelMapper.map(s, ScheduleApiControllerModel.class))
                 .collect(Collectors.toList());
 
-        if (schedules.size() != 0){
+        if (!schedules.isEmpty()){
             return ResponseEntity.ok().body(schedules);
         }
 
@@ -46,11 +45,10 @@ public class ScheduleApiController {
     @PostMapping("/schedule")
     public ResponseEntity<ScheduleApiControllerModel> addSchedule(@RequestBody ScheduleApiControllerModel model) {
         ScheduleServiceModel scheduleServiceModel = modelMapper.map(model, ScheduleServiceModel.class);
-        AnimalApiControllerModel animalApiControllerModel;
-        try {
-            animalApiControllerModel = restTemplate.getForObject( MICROSERVICE_USER_URL + model.getAnimal(), AnimalApiControllerModel.class);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(NO_SUCH_USER);
+        AnimalApiControllerModel animalApiControllerModel = restTemplate.getForObject( MICROSERVICE_USER_URL + model.getAnimal(), AnimalApiControllerModel.class);
+
+        if (animalApiControllerModel == null) {
+          return ResponseEntity.badRequest().build();
         }
 
         scheduleService.save(scheduleServiceModel, animalApiControllerModel.getId());

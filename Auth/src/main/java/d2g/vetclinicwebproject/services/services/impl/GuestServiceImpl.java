@@ -24,25 +24,20 @@ public class GuestServiceImpl implements GuestService {
     private final AuthorityRepository authorityRepository;
     private final RestTemplate restTemplate;
 
-    @HystrixCommand(fallbackMethod = "getFallbackUserHomePage",
-            threadPoolProperties = {
-                    @HystrixProperty(name = "coreSize", value = "30"),
-                    @HystrixProperty(name = "maxQueueSize", value = "-1")
-            },
-            threadPoolKey = "userHomePage",
+    @Override
+    @HystrixCommand(fallbackMethod = "getFallbackUserHome",
             commandProperties = {
                     @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
                     @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "2000"),
                     @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "2000")
             })
-    @Override
     public GuestServiceModel getUserHome(String username) {
         ResponseEntity<GuestServiceModel> resp = restTemplate.exchange(MICROSERVICE_USER_URL + username,
                 HttpMethod.GET, null, new ParameterizedTypeReference<GuestServiceModel>() {
                 });
 
-        return resp.getStatusCode() == HttpStatus.OK ? resp.getBody() : null;
+        return resp.getStatusCode() == HttpStatus.OK ? resp.getBody() : new GuestServiceModel();
     }
 
     @Override
@@ -68,13 +63,8 @@ public class GuestServiceImpl implements GuestService {
         return userRepository.findByUsername(username).orElse(null);
     }
 
-    public GuestServiceModel getFallbackUserHomePage(String id) {
-        return new GuestServiceModel();
-    }
 
-    public GuestServiceModel userHomePage(String id, Throwable throwable) {
-        System.out.printf("fallback, thread: %s input:%s, exception:%s%n",
-                Thread.currentThread().getName(), id, throwable);
+    public GuestServiceModel getFallbackUserHome(String username){
         return new GuestServiceModel();
     }
 }

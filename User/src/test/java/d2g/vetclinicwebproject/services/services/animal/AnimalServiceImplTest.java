@@ -151,7 +151,7 @@ class AnimalServiceImplTest extends TestBase {
 
     @Test
     void addMedicineDisease_whenAnimalNotExist_shouldThrowException() {
-        assertThrows(NoSuchElementException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             Animal animalExpect = new Animal();
             animalExpect.setMedicine("antibiotic");
             animalExpect.setDisease("Bacterial");

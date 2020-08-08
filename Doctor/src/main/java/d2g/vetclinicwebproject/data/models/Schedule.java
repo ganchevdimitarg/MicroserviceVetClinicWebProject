@@ -23,8 +23,11 @@ public class Schedule extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "doctors_id")
     private Doctor doctor;
+    @Column(name = "animal_name")
     private String animalName;
+    @Column(name = "animal_id")
     private String animalId;
+    @Column(name = "finished")
     private boolean isFinished;
 
     public Schedule() {

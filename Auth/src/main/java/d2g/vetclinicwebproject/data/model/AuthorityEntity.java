@@ -14,8 +14,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorityEntity extends BaseEntity {
-    @Column(nullable = false)
-    private String name;
+    @Column(name =  "role",nullable = false)
+    private String role;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", referencedColumnName = "id")

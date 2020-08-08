@@ -24,23 +24,21 @@ import static d2g.vetclinicwebproject.config.Constant.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseEntity implements Serializable {
-    @Column(nullable = false, unique = true)
+    @Column(name = "username",nullable = false, unique = true)
     @NotEmpty
     @Size(min = 3, max = 40, message = INVALID_TEXT_LENGTH_MASSAGE)
     private String username;
-    @Column(unique = true)
-//    @Pattern(regexp = PASSWORD_VALIDATE)
+    @Column(name = "password",unique = true)
     private String password;
-    @Column
+    @Column(name = "name")
     @Nullable
-//    @Size(min = 3, max = 20, message = INVALID_TEXT_LENGTH_MASSAGE)
     private String name;
+    @Column(name = "address")
     private String address;
     @Column(name = "phone_number")
     @Nullable
-//    @Pattern(regexp = PHONE_NUMBER_VALIDATE, message = INVALID_PHONE_NUMBER)
     private String phoneNumber;
-    @Column(name = "photos")
+    @Column(name = "photo")
     private String imageUrl;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Animal> animals;

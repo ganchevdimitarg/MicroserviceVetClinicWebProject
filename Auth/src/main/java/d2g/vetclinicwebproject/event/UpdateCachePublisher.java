@@ -1,5 +1,6 @@
 package d2g.vetclinicwebproject.event;
 
+import d2g.vetclinicwebproject.services.models.AnimalServiceModel;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -11,8 +12,8 @@ public class UpdateCachePublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public void publishUpdateCache(String username){
-        UpdateCacheEvent updateCacheEvent = new UpdateCacheEvent(this, username);
+    public void publishUpdateCache(String username, AnimalServiceModel animal){
+        UpdateCacheEvent updateCacheEvent = new UpdateCacheEvent(this, username, animal);
         applicationEventPublisher.publishEvent(updateCacheEvent);
     }
 
